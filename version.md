@@ -25,3 +25,9 @@ added audio support
 
 # 1.1.3
 added a slider
+
+# 1.1.4
+changed drawing functions
+
+# 1.2.0
+overhaul of appConstructor
