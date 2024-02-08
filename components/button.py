@@ -44,7 +44,7 @@ class Button:
         if text != "":
             buttonText = font.render(text, True, textColor)
             vars.mainDisplay.blit(buttonText, (position[0] + size[0] / 2 - buttonText.get_width() / 2, position[1] + size[1] / 2 - buttonText.get_height() / 2))
-        return Interactions.isClickedInRect(buttonRect, mouseButton.leftMouseButton.value)
+        return Interactions.onMouseClickInRect(buttonRect, mouseButton.leftMouseButton.value)
         
     # instance
     def text(self, text: str, textFont: pygame.font = Font.H4, textColor: vars.RGBvalue = Color.BLACK, overFlow = overFlow.ellipsis):
@@ -75,16 +75,16 @@ class Button:
         self.__icon.resize(self.buttonSize[0], self.buttonSize[1])    
 
     def onMouseOver(self):
-        return Interactions.isMouseOver(self.buttonRect)
+        return Interactions.onMouseOver(self.buttonRect)
 
     def onMouseClick(self, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
-        return Interactions.isClickedInRect(self.buttonRect, mouseButton.value)
+        return Interactions.onMouseClickInRect(self.buttonRect, mouseButton.value)
     
     def onMouseRelease(self, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions.isReleasedInRect(self.buttonRect, mouseButton.value)
 
     def onMouseHold(self, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
-        return Interactions.isHoldingInRect(self.buttonRect, mouseButton.value)
+        return Interactions.onMouseHoldInRect(self.buttonRect, mouseButton.value)
     
     def inRect(self, rect: pygame.Rect):
         return Interactions.rectInRect(rect, self.getRect)

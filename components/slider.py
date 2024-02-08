@@ -27,8 +27,8 @@ class Slider:
         if sliderPostition <= self.sliderMax and sliderPostition >= self.sliderMin:
             self.sliderPosition = sliderPostition
             
-    def isClicked(self):
-        Interactions.isClickedInRect(self.sliderRect, mouseButton.leftMouseButton)
+    def onMouseClick(self):
+        Interactions.onMouseClickInRect(self.sliderRect, mouseButton.leftMouseButton)
     
     def place(self, left, top):
         self.sliderRect = pygame.Rect(left, top, self.sliderSize[0], self.sliderSize[1])
@@ -41,7 +41,7 @@ class Slider:
         return self._calculateSliderPosition()
     
     def _getSliderPosition(self, left):
-        if Interactions.isClickedInRect(self.sliderRect, mouseButton.leftMouseButton):
+        if Interactions.onMouseClickInRect(self.sliderRect, mouseButton.leftMouseButton):
             self.clickedInRect = True
         
         if Interactions.isReleased(mouseButton.leftMouseButton):

@@ -83,7 +83,7 @@ class Text:
         vars.mainDisplay.blit(self.textSurface, (xCord, yCord))
         
     def onMouseClick(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
-        if Interactions.isClickedInRect(self.getRect, mouseButton):
+        if Interactions.onMouseClickInRect(self.getRect, mouseButton):
             return True
         return False
 

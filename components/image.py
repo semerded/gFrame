@@ -22,17 +22,17 @@ class Image:
         self.image = pygame.transform.scale(self.image, (width, height))
         self.imageSize = self.getSize
 
-    def isMouseOver(self):
-        return Interactions.isMouseOver(self.getImageRect)
+    def onMouseOver(self):
+        return Interactions.onMouseOver(self.getImageRect)
 
-    def isClicked(self, mouseButton: mouseButton):
-        return Interactions.isClickedInRect(self.getImageRect, mouseButton)
+    def onMouseClick(self, mouseButton: mouseButton):
+        return Interactions.onMouseClickInRect(self.getImageRect, mouseButton)
 
     def isReleased(self, mouseButton: mouseButton):
         return Interactions.isReleasedInRect(self.getImageRect, mouseButton)
 
-    def isHolding(self, mouseButton: mouseButton):
-        return Interactions.isHoldingInRect(self.getImageRect, mouseButton)
+    def onMouseHold(self, mouseButton: mouseButton):
+        return Interactions.onMouseHoldInRect(self.getImageRect, mouseButton)
 
     def place(self, xPosition: float, yPosition: float):
         self.imagePosition = (xPosition, yPosition)
