@@ -3,38 +3,46 @@ import vars
 from elements.colors import Color
 
 class Draw:
-    def rectangle(xPosition: float, yPosition: float, width: float, height: float, color: vars.RGBvalue = Color.LIGHT_GRAY, cornerRadius: int = -1):
-        return pygame.draw.rect(vars.mainDisplay, color, pygame.Rect(xPosition, yPosition, width, height), border_radius=cornerRadius)
+    def rectangle(left: float, top: float, width: float, height: float, color: vars.RGBvalue = Color.LIGHT_GRAY, cornerRadius: int = -1):
+        return pygame.draw.rect(vars.mainDisplay, color, pygame.Rect(left, top, width, height), border_radius=cornerRadius)
     
     def rectangleFromRect(rect: pygame.Rect, color: vars.RGBvalue = Color.LIGHT_GRAY, cornerRadius: int = -1):
-        return pygame.draw.rect(vars.mainDisplay, color, rect, border_radius=cornerRadius)
+        return Draw.rectangle(rect.x, rect.y, rect.width, rect.height, color, cornerRadius)
     
-    def transparantRectangle(xPosition: float, yPosition: float, width: float, height: float, transparancy: int, color: vars.RGBvalue = Color.LIGHT_GRAY):
+    def transparantRectangle(left: float, top: float, width: float, height: float, transparancy: int, color: vars.RGBvalue = Color.LIGHT_GRAY):
         rectangle = pygame.Surface((width, height))
         rectangle.set_alpha(transparancy)
         rectangle.fill(color)
-        vars.mainDisplay.blit(rectangle, (xPosition, yPosition))
+        return vars.mainDisplay.blit(rectangle, (left, top))
         
     def transparantRectangleFromRect(rect: pygame.Rect, transparancy: int, color: vars.RGBvalue = Color.LIGHT_GRAY):
-        rectangle = pygame.Surface((rect.width, rect.height))
-        rectangle.set_alpha(transparancy)
-        rectangle.fill(color)
-        vars.mainDisplay.blit(rectangle, (rect.x, rect.y))
+        return Draw.transparantRectangle(rect.x, rect.y, rect.width, rect.height, transparancy, color)
         
-    def border(borderWidth: int, rectValue: pygame.Rect | tuple[float, float, float, float], color: vars.RGBvalue = Color.BLACK, cornerRadius: int = -1) -> pygame.Rect:
-        if isinstance(rectValue, pygame.Rect):
-            xPosition = rectValue.x - borderWidth / 2
-            yPosition = rectValue.y - borderWidth / 2
-            width = rectValue.width + borderWidth
-            height = rectValue.height + borderWidth
-        else:
-            xPosition = rectValue[0] - borderWidth / 2
-            yPosition = rectValue[1] - borderWidth / 2
-            width = rectValue[2] - borderWidth
-            height = rectValue[3] - borderWidth
-        return pygame.draw.rect(vars.mainDisplay, color, pygame.Rect(xPosition, yPosition, width, height), width=borderWidth, border_radius=cornerRadius)
+    def border(left: float, top: float, width: float, height: float, borderWidth: int, color: vars.RGBvalue = Color.BLACK, cornerRadius: int = -1) -> pygame.Rect:
+        return pygame.draw.rect(vars.mainDisplay, color, pygame.Rect(left - borderWidth / 2, width - borderWidth - borderWidth / 2, width, height - borderWidth), width=borderWidth, border_radius=cornerRadius)
+    
+    def borderFromRect(rect: pygame.Rect, borderWidth: int, color: vars.RGBvalue = Color.BLACK, cornerRadius: int = -1):
+        return Draw.border(rect.x, rect.y, rect.width, rect.height, borderWidth, color, cornerRadius)
     
     def calculateInnerBorderRadius(outerBorderRadius, borderWidth):
         innerBorderRadius = (outerBorderRadius - borderWidth)
         return innerBorderRadius if innerBorderRadius > 0 else 0
+    
+    def pointInPolygon(point: list | tuple, polygon: list | tuple[list | tuple]) -> bool:
+        num_vertices = len(polygon)
+        x, y = point[0], point[1]
+
+        inside = False
+        p1 = polygon[0]
+
+        for i in range(1, num_vertices + 1):
+            p2 = polygon[i % num_vertices]
+            if y > min(p1[1], p2[1]):
+                if y <= max(p1[1], p2[1]):
+                    if x <= max(p1[0], p2[0]):
+                        x_intersection = (y - p1[1]) * (p2[0] - p1[0]) / (p2[1] - p1[1]) + p1[0]
+                        if p1[0] == p2[0] or x <= x_intersection:
+                            inside = not inside
+            p1 = p2
+        return inside
     

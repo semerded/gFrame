@@ -10,7 +10,7 @@ userScreenWidth = displayInfo.current_w
 userScreenHeight = displayInfo.current_h
 appScreenWidth = 0
 appScreenHeight = 0
-mainDisplay = None
+mainDisplay: pygame.Surface = None
 screenUpdate = False
 
 # LMB, MMB, RMB, SCRLup, SCRLdown, SMBbottom, SMBtop
