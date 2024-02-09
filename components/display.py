@@ -1,6 +1,6 @@
 from importer import pygame
 from components.screenUnits import ScreenUnit
-from elements.enums import axis
+from elements.enums import aspectRatios
 import vars
 try:
     import PIL.Image
@@ -41,7 +41,12 @@ class Display:
         if updateScreen:
             Display.set(width, height, *vars.appFlags)
     
-    def setAspectRatio(aspectRatio: str | float, width: int = None, height: int = None):
+    def setAspectRatio(aspectRatio: str | float | aspectRatios, width: int = None, height: int = None):
+        """
+        calculates the aspect ratio from the width or height and resizes the screen to that size\n
+        when no size is givin, the size will be calculated from the current width of the screen\n
+        when 2 sizes are givin, the size from the givin width will be used\n
+        """
         vars.aspectRatioObject.setAspectRatio(aspectRatio, width, height)
     
     def disableAspectRatio():

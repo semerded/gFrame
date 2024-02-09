@@ -9,7 +9,9 @@ class _AspectRatio:
         self.aspectRatio: float
         self.aspectRatioAxis: axis
         
-    def setAspectRatio(self, aspectRatio: str | float, width: int = None, height: int = None):
+    def setAspectRatio(self, aspectRatio: str | float | aspectRatios, width: int = None, height: int = None):
+        if isinstance(aspectRatio, aspectRatios):
+            aspectRatio = aspectRatio.value
         self.aspectRatioActive = True
         self._getAspectRatio(aspectRatio)
         self._getAxis(width, height)

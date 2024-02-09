@@ -1,4 +1,5 @@
 import vars
+from elements.enums import aspectRatios
 
 class ScreenUnit:
     def convert():
@@ -41,14 +42,13 @@ class ScreenUnit:
         vw = ScreenUnit.getVwFromPx(position[0])
         vh = ScreenUnit.getVhFromPx(position[1])
         return vw, vh
-    # @dispatch(int, int)
-    # def aspectRatio(xRatio: int, yRatio: int) -> (int | float):
-    #     return xRatio / yRatio 
     
-    # @dispatch(aspectRatios)
-    # def aspectRatio(aspectRatio: aspectRatios):
-    #     aspectRatioValues = aspectRatio.value.split("/")
-    #     return int(aspectRatioValues[0]) / int(aspectRatioValues[1])
+    def aspectRatioFromInt(xRatio: int, yRatio: int):
+        return xRatio / yRatio
     
-    # def calculateAspectRatio(width: screenUnit, height: screenUnit):
-    #     return width / height
+    def aspectRatioFromString(aspectRatio: str | aspectRatios):
+        if isinstance(aspectRatio, aspectRatios):
+            aspectRatioValues = aspectRatio.value.split("/")
+        else:
+            aspectRatioValues = aspectRatio.split("/")
+        return int(aspectRatioValues[0]) / int(aspectRatioValues[1])
