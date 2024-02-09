@@ -1,85 +1,100 @@
 from importer import pygame
 from elements.enums import mouseButton
-from components.display import Display
+from components.draw import Draw
 import vars
 
 class Interactions:
-    # mouse button        
-    def resetPreviousMouseButtonStatus():
-        vars.previousMouseButtonStatus = []
-        for _ in range(len(mouseButton)):
-            vars.previousMouseButtonStatus.append(False)
-
-    def _isMouseButtonPressed(mouseButton: mouseButton):
+    #* mouse button 
+    #private       
+    def _posFlank(mouseButton: mouseButton):
         mouseButton = Interactions._checkIfInt(mouseButton)
-        if vars.mouseButtonsStatus[mouseButton]:
-            return True
-        return False
-
-    def _mouseButtonPositiveFlank(mouseButton: mouseButton):
+        return vars.mouseFlank[mouseButton] and vars.mouseButtonsStatus[mouseButton]
+    
+    def _negFlank(mouseButton: mouseButton):
         mouseButton = Interactions._checkIfInt(mouseButton)
-        if vars.mouseButtonsStatus[mouseButton] and not vars.previousMouseButtonStatus[mouseButton]:
-            vars.previousMouseButtonStatus[mouseButton] = True
-            return True
-        return False
-
-    def _mouseButtonNegativeFlank(mouseButton: mouseButton):
+        return vars.mouseFlank[mouseButton] and not vars.mouseButtonsStatus[mouseButton]
+    
+    def _pressed(mouseButton: mouseButton):
         mouseButton = Interactions._checkIfInt(mouseButton)
-        if not vars.mouseButtonsStatus[mouseButton] and vars.previousMouseButtonStatus[mouseButton]:
-            vars.previousMouseButtonStatus[mouseButton] = True
-            return True
-        return False
+        return vars.mouseButtonsStatus[mouseButton]
     
     def _checkIfInt(mouseButton: int | mouseButton):
         if type(mouseButton) == int:
             return mouseButton
         return mouseButton.value
 
-    def onMouseOver(rect: pygame.Rect):
+    # area detection
+    def isMouseOver(rect: pygame.Rect) -> bool:
         return rect.collidepoint(pygame.mouse.get_pos())
     
-    def isMouseInArea(topCord: int, bottomCord: int):
+    def isMouseInArea(topCord: int, bottomCord: int) -> bool:
         rect = pygame.Rect(topCord, bottomCord)
-        return Interactions.onMouseOver(rect)
+        return Interactions.isMouseOver(rect)
     
     def isMouseInPolygon(polygon: list | tuple [list | tuple]) -> bool:
-        return Display.pointInPolygon(pygame.mouse.get_pos(), polygon)
+        return Draw.pointInPolygon(pygame.mouse.get_pos(), polygon)
 
-    def onMouseClick(mouseButton: mouseButton) -> bool:
-        return Interactions._mouseButtonPositiveFlank(mouseButton)
+    # click detection
+    def isMouseClicked(mouseButton: mouseButton) -> bool:
+        return Interactions._posFlank(mouseButton)
     
-    def onMouseClickInRect(rect: pygame.Rect, mouseButton: mouseButton):
-        return Interactions.onMouseOver(rect) and Interactions.onMouseClick(mouseButton)
+    def isMouseClickedInRect(mouseButton: mouseButton, rect: pygame.Rect) -> bool:
+        return Interactions.isMouseOver(rect) and Interactions.isMouseClicked(mouseButton)
     
-    def onMouseClickInPolygon(polygon: list | tuple [list | tuple], mouseButton: mouseButton) -> bool:
-        return Interactions.isMouseInPolygon(polygon) and Interactions.onMouseClick(mouseButton)
+    def isMouseClickedInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
+        return Interactions.isMouseInPolygon(polygon) and Interactions.isMouseClicked(mouseButton)
+    
+    def isMouseClickedInCircle(mouseButton: mouseButton): # TODO add for every thing circle interactions
+        pass
 
-    def isReleased(mouseButton: mouseButton):
-        return Interactions._mouseButtonNegativeFlank(mouseButton)
+    # release detection
+    def isMouseReleased(mouseButton: mouseButton) -> bool:
+        return Interactions._negFlank(mouseButton)
     
-    def isReleasedInRect(rect: pygame.Rect, mouseButton: mouseButton):
-        return Interactions.onMouseOver(rect) and Interactions.isReleased(mouseButton)
+    def isReleasedInRect(mouseButton: mouseButton, rect: pygame.Rect) -> bool:
+        return Interactions.isMouseOver(rect) and Interactions.isMouseReleasedeased(mouseButton)
     
-    def onMouseHold(mouseButton: mouseButton):
-        return Interactions._isMouseButtonPressed(mouseButton)
+    def isMouseReleasedInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
+        return Interactions.isMouseInPolygon(polygon) and Interactions.isMouseReleased(mouseButton)
     
-    def onMouseHoldInRect(rect: pygame.Rect, mouseButton: mouseButton):
-        return Interactions.onMouseOver(rect) and Interactions._isMouseButtonPressed(mouseButton)
+    def isMouseReleasedInCircle(mouseButton: mouseButton): # TODO
+        pass
     
-    # scrolling
+    # hold detection
+    def isMousePressing(mouseButton: mouseButton):
+        return Interactions._pressed(mouseButton)
+    
+    def isMousePressingInRect(mouseButton: mouseButton, rect: pygame.Rect):
+        return Interactions.isMouseOver(rect) and Interactions._pressed(mouseButton)
+    
+    def isMousePressingInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]):
+        return Interactions.isMouseInPolygon(polygon) and Interactions.isMousePressing(mouseButton)
+    
+    def isMousePressingInCircle(mouseButton: mouseButton): # TODO
+        pass
+    
+    # scrolling detection
     def isScrolledUp():
-        return Interactions._isMouseButtonPressed(mouseButton.scrollUp)
+        return Interactions._pressed(mouseButton.scrollUp)
     
     def isScrolledDown():
-        return Interactions._isMouseButtonPressed(mouseButton.scrollDown)
+        return Interactions._pressed(mouseButton.scrollDown)
     
     def isScrolled():
-        return Interactions._isMouseButtonPressed(mouseButton.scrollUp) or Interactions._isMouseButtonPressed(mouseButton.scrollDown)
+        return Interactions._pressed(mouseButton.scrollUp) or Interactions._pressed(mouseButton.scrollDown)
     
     # keyboard
+    def isKeyClicked(key: int):
+        return key in vars.clickedKeys
     
+    def isKeyReleased(key: int):
+        return key in vars.releasedKeys
+    
+    def isKeyPressing(key: int):
+        return key in vars.activeKeys
     
     # other
     def rectInRect(masterRect: pygame.Rect, childRect: pygame.Rect):
         return masterRect.colliderect(childRect)
+    
     
