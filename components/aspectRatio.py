@@ -1,6 +1,6 @@
 from elements.enums import axis, aspectRatios
 from components.screenUnits import ScreenUnit
-from core import setDisplayMode
+from components.display import Display
 import vars
 
 class _AspectRatio:
@@ -16,7 +16,7 @@ class _AspectRatio:
         self._getAspectRatio(aspectRatio)
         self._getAxis(width, height)
         self._calculateAspectRatioDimensions(width, height)
-        setDisplayMode(width, height, vars.appFlags)
+        Display.set(width, height, vars.appFlags)
     
     def disableAspectRatio(self):
         self.aspectRatioActive = False
@@ -29,7 +29,7 @@ class _AspectRatio:
             width = 0
             height = vars.appHeight
         width, height, self._calculateAspectRatioDimensions(width, height)
-        setDisplayMode(width, height, vars.appFlags)
+        Display.set(width, height, vars.appFlags)
 
 
     # private    
