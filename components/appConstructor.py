@@ -1,7 +1,7 @@
 from importer import pygame
-from components.interactions import Interactions
-from components.updating import Updating
 from components.display import Display
+from components.updating import Updating
+from components.aspectRatio import _AspectRatio
 from elements.enums import axis
 from typing_extensions import TypeAlias, Literal
 import vars, sys, os
@@ -17,6 +17,7 @@ class AppConstructor:
     it main purpose is to do every action within the `eventhandler` function
     """
     def __init__(self, appWidth: vars.validScreenUnit, appHeight: vars.validScreenUnit, *flags, manualUpdating: bool = False) -> None:
+        vars.aspectRatioObject = _AspectRatio()
         vars.appWidth = appWidth
         vars.appHeight = appHeight
         vars.appFlags = flags
@@ -90,7 +91,7 @@ class AppConstructor:
         self.appFrameCounter += 1
         self.pageCounter += 1
             
-    def setModifiableFunction(self, type: modifiableFunctions, function: function): 
+    def setModifiableFunction(self, type: modifiableFunctions, function): 
         self.modifiableFunctions[type] = function
     
     def resetModifiableFunction(self, type: modifiableFunctions):

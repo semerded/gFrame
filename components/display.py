@@ -1,5 +1,5 @@
 from importer import pygame
-from components.screenUnits import ScreenUnit
+from core import setDisplayMode
 from elements.enums import aspectRatios
 import vars
 try:

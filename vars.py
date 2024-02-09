@@ -1,5 +1,4 @@
 from typing_extensions import TypeAlias
-from components.aspectRatio import _AspectRatio
 from importer import pygame
 
 # type declaration
@@ -20,7 +19,7 @@ mainDisplay: pygame.Surface = None
 screenUpdate = False
 windowResized = False
 
-aspectRatioObject: _AspectRatio = _AspectRatio()
+aspectRatioObject = None
 
 # global interactions
 #? LMB, MMB, RMB, SCRLup, SCRLdown, SMBbottom, SMBtop
