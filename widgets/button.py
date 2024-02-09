@@ -3,8 +3,8 @@ from elements.colors import Color
 from elements.fonts import *
 from elements.enums import mouseButton, overFlow
 from components.interactions import Interactions
-from components.image import Image
-from components.text import Text
+from widgets.image import Image
+from widgets.text import Text
 from components.draw import Draw
 import vars
 
