@@ -51,7 +51,7 @@ class Interactions:
     def isMouseReleased(mouseButton: mouseButton) -> bool:
         return Interactions._negFlank(mouseButton)
     
-    def isReleasedInRect(mouseButton: mouseButton, rect: pygame.Rect) -> bool:
+    def isMouseReleasedInRect(mouseButton: mouseButton, rect: pygame.Rect) -> bool:
         return Interactions.isMouseOver(rect) and Interactions.isMouseReleasedeased(mouseButton)
     
     def isMouseReleasedInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:

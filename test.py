@@ -8,5 +8,5 @@ while True:
     GAME.eventHandler()
     game.Display.fill(game.Color.WHITE)
     
-    print(slider.place(100, 100))
+    # print(slider.place(100, 100))
     game.Updating.updateDisplay()

@@ -44,7 +44,7 @@ class Button:
         if text != "":
             buttonText = font.render(text, True, textColor)
             vars.mainDisplay.blit(buttonText, (position[0] + size[0] / 2 - buttonText.get_width() / 2, position[1] + size[1] / 2 - buttonText.get_height() / 2))
-        return Interactions.onMouseClickInRect(buttonRect, mouseButton.leftMouseButton.value)
+        return Interactions.isMouseClickedInRect(buttonRect, mouseButton.leftMouseButton.value)
         
     # instance
     def text(self, text: str, textFont: pygame.font = Font.H4, textColor: vars.RGBvalue = Color.BLACK, overFlow = overFlow.ellipsis):
