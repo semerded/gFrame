@@ -1,5 +1,5 @@
 from importer import pygame
-version = '1.2.0'
+version = '1.2.2'
 def getVersion():
     print(version)
 

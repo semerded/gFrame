@@ -31,3 +31,9 @@ changed drawing functions
 
 # 1.2.0
 overhaul of appConstructor
+
+# 1.2.1
+changed working of aspect ratio and minimum screen size
+
+# 1.2.2
+overhaul of mouse button interaction mechanics
