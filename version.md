@@ -37,3 +37,12 @@ changed working of aspect ratio and minimum screen size
 
 # 1.2.2
 overhaul of mouse button interaction mechanics
+
+# 1.3.0
+added basic widgets
+
+# 1.3.1
+revamped button class implementing 
+
+# 1.3.2
+added a block for any interaction in the first frame

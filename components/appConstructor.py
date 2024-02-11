@@ -40,6 +40,12 @@ class AppConstructor:
         self.fps = fps
         self.clock.tick(fps)
         
+        if self.isFirstFrame(): # reset when first page frame
+            vars.mouseButtonsStatus = [False, False, False, False, False, False, False]
+            vars.activeKeys = []
+            vars.releasedKeys = []
+            vars.clickedKeys = []
+        
         # reset
         vars.windowResized = False
         
@@ -49,47 +55,51 @@ class AppConstructor:
         
         # * get all events
         self.appEvents = pygame.event.get()
-        for event in self.appEvents:
-            if event.type == pygame.QUIT:
-                if self.modifiableFunctions["quit"] == None:
-                    pygame.quit()
-                    sys.exit()
-                else:
-                    self.modifiableFunctions["quit"]()
-            
-            elif event.type == pygame.WINDOWRESIZED:
-                vars.windowResized = True
-                if vars.minimumScreenWidth != None or vars.minimumScreenHeight != None:
-                    Display.checkForMinimumScreenSizeBreaches()
-                if vars.aspectRatioObject.aspectRatioActive:
-                    vars.aspectRatioObject.updateAspectRatio()
-            
-            elif event.type == pygame.KEYDOWN:  
-                vars.mouseFlank[event.button] = True
-                vars.mouseButtonsStatus[event.button] = True
-            
-            elif event.type == pygame.KEYUP:
-                vars.mouseFlank[event.button] = True
-                vars.mouseButtonsStatus[event.button] = False
-            
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                vars.activeKeys.append(event.key)
-                vars.clickedKeys.append(event.key)
-            
-            elif event.type == pygame.MOUSEBUTTONUP:
-                index = vars.activeKeys.index(event.button)
-                vars.releasedKeys.append(vars.activeKeys.pop(index))
-                            
-            if event.type == pygame.MOUSEWHEEL:
-                vars.scrollValue = event.y
-            else:
-                vars.scrollValue = 0
+        if not self.isFirstFrame():
+            for event in self.appEvents:
+                if event.type == pygame.QUIT:
+                    if self.modifiableFunctions["quit"] == None:
+                        pygame.quit()
+                        sys.exit()
+                    else:
+                        self.modifiableFunctions["quit"]()
                 
-        if not self.manualUpdating or self.updatePending or self.pageCounter < 2 or vars.windowResized:
+                elif event.type == pygame.WINDOWRESIZED:
+                    vars.windowResized = True
+                    if vars.minimumScreenWidth != None or vars.minimumScreenHeight != None:
+                        Display.checkForMinimumScreenSizeBreaches()
+                    if vars.aspectRatioObject.aspectRatioActive:
+                        vars.aspectRatioObject.updateAspectRatio()
+                
+                elif event.type == pygame.KEYDOWN:  
+                    vars.mouseFlank[event.button] = True
+                    vars.mouseButtonsStatus[event.button] = True
+                
+                elif event.type == pygame.KEYUP:
+                    vars.mouseFlank[event.button] = True
+                    vars.mouseButtonsStatus[event.button] = False
+                
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    vars.activeKeys.append(event.key)
+                    vars.clickedKeys.append(event.key)
+                
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    index = vars.activeKeys.index(event.button)
+                    vars.releasedKeys.append(vars.activeKeys.pop(index))
+                                
+                if event.type == pygame.MOUSEWHEEL:
+                    vars.scrollValue = event.y
+                else:
+                    vars.scrollValue = 0
+                    
+        if not self.manualUpdating or self.updatePending or self.isFirstFrame() or vars.windowResized:
             Updating.updateDisplay()
             
         self.appFrameCounter += 1
         self.pageCounter += 1
+        
+    def isFirstFrame(self):
+        return self.pageCounter < 2
             
     def setModifiableFunction(self, type: modifiableFunctions, function): 
         self.modifiableFunctions[type] = function
