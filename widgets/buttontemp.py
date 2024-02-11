@@ -2,6 +2,7 @@ from importer import pygame
 import vars
 from components.draw import Draw
 from components.interactions import Interactions
+from widgets.image import Image
 from elements.fonts import Font
 from elements.colors import Color
 from elements.enums import mouseButton, overFlow
@@ -37,3 +38,29 @@ class Button(_ColoredWidget):
     
     def text(self, text: str, textFont: pygame.font = Font.H4, color: vars.RGBvalue = Color.BLACK, overFlow = overFlow.ellipsis):
         self.buttonText = Text.textOverflow(text, textFont, self.widgetSize[0], overFlow)
+        self.buttonTextFont = textFont
+        self.buttonTextColor = color
+        
+    def icon(self, iconPath: str):
+        self.buttonIcon = Image(iconPath)
+        self._resizeIcon()
+                
+    def _resizeIcon(self):
+        self.buttonIcon.resize(self.widgetSize[0], self.widgetSize[1])
+    
+    def _placeText(self):
+        if self.buttonText != None:
+            self.textSurface = self.buttonTextFont.render(self.buttonText, True, self.buttonTextColor)
+            textPosX, textPosY = Text.centerTextInRect(self.textSurface, self.widgetRect)
+            vars.mainDisplay.blit(self.textSurface, (textPosX, textPosY))
+    
+    def place(self, left, top):
+        Draw.rectangleFromRect(self.widgetRect, self.widgetColor, Draw.calculateInnerBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
+        self._placeText()
+        
+        if self.buttonIcon != None:
+            self.buttonIcon.place(left, top)
+        self.widgetPlace()
+            
+        
+    
