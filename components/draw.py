@@ -24,6 +24,9 @@ class Draw:
     def borderFromRect(rect: pygame.Rect, borderWidth: int, color: vars.RGBvalue = Color.BLACK, cornerRadius: int = -1):
         return Draw.border(rect.x, rect.y, rect.width, rect.height, borderWidth, color, cornerRadius)
     
+    def pixel(left: vars.validScreenUnit, top: vars.validScreenUnit, color: vars.RGBvalue):
+        return Draw.rectangle(left, top, 1, 1, color)
+    
     def calculateInnerBorderRadius(outerBorderRadius, borderWidth):
         innerBorderRadius = (outerBorderRadius - borderWidth)
         return innerBorderRadius if innerBorderRadius > 0 else 0

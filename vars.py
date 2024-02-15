@@ -1,9 +1,17 @@
-from typing_extensions import TypeAlias
+from typing_extensions import TypeAlias, Literal
 from importer import pygame
 
 # type declaration
 RGBvalue: TypeAlias = tuple[int, int, int]
-validScreenUnit: TypeAlias = int | float
+validScreenUnit: TypeAlias = int | float | Literal[
+                                                    "vw",
+                                                    "vh",
+                                                    "dw",
+                                                    "dh",
+                                                    "px",
+                                                    "em"
+                                                    ]
+
 pygameFont: TypeAlias = pygame.font.Font
 
 # screen info

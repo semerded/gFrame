@@ -1,6 +1,7 @@
 import vars
 from elements.enums import aspectRatios
 
+
 class ScreenUnit:
     def convert():
         ...
@@ -12,31 +13,34 @@ class ScreenUnit:
         """
         display width
         """
-        return vars.userScreenWidth / 100 * screenUnit
+        return vars.displayWidth / 100 * screenUnit
 
     def dh(screenUnit: float) -> float:
         """
         display height
         """
-        return vars.userScreenHeight / 100 * screenUnit
+        return vars.displayHeight / 100 * screenUnit
     
     def vw(screenUnit: float) -> float:
         """
         view width 
         """
-        return vars.appScreenWidth / 100 * screenUnit
+        return vars.appWidth / 100 * screenUnit
     
     def vh(screenUnit: float) -> float:
         """
         view height
         """
-        return vars.appScreenHeight / 100 * screenUnit
+        return vars.appHeight / 100 * screenUnit
+    
+    def px(screenUnit: float) -> float:
+        return screenUnit
     
     def getVwFromPx(xPixel: int) -> (int | float):
-        return xPixel / (vars.appScreenWidth / 100)
+        return xPixel / (vars.appWidth / 100)
     
     def getVhFromPx(yPixel: int) -> (int | float):
-        return yPixel / (vars.appScreenHeight / 100)
+        return yPixel / (vars.appHeight / 100)
 
     def getRelativePosition(position: tuple[int]) -> tuple[(int | float)]:
         vw = ScreenUnit.getVwFromPx(position[0])
@@ -52,3 +56,41 @@ class ScreenUnit:
         else:
             aspectRatioValues = aspectRatio.split("/")
         return int(aspectRatioValues[0]) / int(aspectRatioValues[1])
+    
+    def checkIfValidScreenUnit(screenUnit: float | str | int):
+        if isinstance(screenUnit, str):
+            return _StrScreenUnitConverter.getUnitType(screenUnit)
+        return screenUnit
+
+
+            
+class _StrScreenUnitConverter:
+    def getUnitType(screenUnit):
+        splitUnit = _StrScreenUnitConverter.splitUnit(screenUnit)
+        try: 
+            return _screenUnitMapping[splitUnit[1]](splitUnit[0])
+        except KeyError:
+            print("an error occured") # TODO add error to log file
+            return 0
+        
+    def splitUnit(screenUnit):
+        number = string = ""
+        for char in screenUnit:
+            try:
+                int(char)
+                number += char
+            except ValueError:
+                string += char
+        return int(number), string
+    
+    def emUnit(screenUnit):
+        pass
+
+_screenUnitMapping = {
+    "vw": ScreenUnit.vw,
+    "vh": ScreenUnit.vh,
+    "dw": ScreenUnit.dw,
+    "dh": ScreenUnit.dh,
+    "px": ScreenUnit.px
+} 
+
