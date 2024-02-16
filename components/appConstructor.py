@@ -1,4 +1,5 @@
 from importer import pygame
+from components.screenUnits import ScreenUnit
 from components.display import Display
 from components.updating import Updating
 from components.aspectRatio import _AspectRatio
@@ -11,15 +12,20 @@ modifiableFunctions: TypeAlias = Literal[
     "test"
 ]
 
+constructorUnit: TypeAlias = int | float | Literal[
+    "dw",
+    "dh",
+    "px"
+]
+
 class AppConstructor:
     """
     the appConstructor initializes the game display\n
     it main purpose is to do every action within the `eventhandler` function
     """
-    def __init__(self, appWidth: vars.validScreenUnit, appHeight: vars.validScreenUnit, *flags, manualUpdating: bool = False) -> None:
+    def __init__(self, appWidth: constructorUnit, appHeight: constructorUnit, *flags, manualUpdating: bool = False) -> None:
         vars.aspectRatioObject = _AspectRatio()
-        vars.appWidth = appWidth
-        vars.appHeight = appHeight
+        vars.appWidth, vars.appHeight = ScreenUnit.convertMultipleUnits(appWidth, appHeight)
         vars.appFlags = flags
         self.manualUpdating = manualUpdating
         self.clock = pygame.time.Clock()
@@ -71,19 +77,19 @@ class AppConstructor:
                     if vars.aspectRatioObject.aspectRatioActive:
                         vars.aspectRatioObject.updateAspectRatio()
                 
-                elif event.type == pygame.KEYDOWN:  
+                elif event.type == pygame.MOUSEBUTTONDOWN:  
                     vars.mouseFlank[event.button] = True
                     vars.mouseButtonsStatus[event.button] = True
                 
-                elif event.type == pygame.KEYUP:
+                elif event.type == pygame.MOUSEBUTTONUP:
                     vars.mouseFlank[event.button] = True
                     vars.mouseButtonsStatus[event.button] = False
                 
-                elif event.type == pygame.MOUSEBUTTONDOWN:
+                elif event.type == pygame.KEYDOWN:
                     vars.activeKeys.append(event.key)
                     vars.clickedKeys.append(event.key)
                 
-                elif event.type == pygame.MOUSEBUTTONUP:
+                elif event.type == pygame.KEYUP:
                     index = vars.activeKeys.index(event.button)
                     vars.releasedKeys.append(vars.activeKeys.pop(index))
                                 
