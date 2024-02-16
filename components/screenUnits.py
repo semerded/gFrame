@@ -3,9 +3,6 @@ from elements.enums import aspectRatios
 
 
 class ScreenUnit:
-    def convert():
-        ...
-
     def precent(parentSize, percent):
         return parentSize / 100 * percent
 
@@ -57,10 +54,17 @@ class ScreenUnit:
             aspectRatioValues = aspectRatio.split("/")
         return int(aspectRatioValues[0]) / int(aspectRatioValues[1])
     
-    def checkIfValidScreenUnit(screenUnit: float | str | int):
+    def checkIfValidScreenUnit(screenUnit: vars.validScreenUnit):
         if isinstance(screenUnit, str):
             return _StrScreenUnitConverter.getUnitType(screenUnit)
         return screenUnit
+    
+    def convertMultipleUnits(*screenUnit: vars.validScreenUnit):
+        results = []
+        for unit in screenUnit:
+            results.append(ScreenUnit.checkIfValidScreenUnit(unit))
+        return results
+            
 
 
             

@@ -2,23 +2,24 @@ from importer import pygame
 
 import vars
 from components.interactions import Interactions
+from components.screenUnits import ScreenUnit
 from components.draw import Draw
 from elements.enums import mouseButton
 from elements.colors import Color
 
 class _baseWidget:
-    def __init__(self, size: tuple[vars.validScreenUnit, vars.validScreenUnit], color: vars.RGBvalue, borderRadius: int = -1) -> None:
-        self.widgetSize = size
+    def __init__(self, size: tuple[vars.validScreenUnit, vars.validScreenUnit], borderRadius: int = -1) -> None:
+        self.widgetSize = ScreenUnit.convertMultipleUnits(*size) # size
         self.widgetRect: pygame.Rect = pygame.Rect(0, 0, 0, 0)
         self.borderRect: pygame.Rect = pygame.Rect(0, 0, 0, 0)
-        self.widgetBorderRadius = borderRadius
+        self.widgetBorderRadius = ScreenUnit.checkIfValidScreenUnit(borderRadius)
         
         self.widgetBorderWidth = 0
         self.widgetBorderColor = Color.BLACK
         
     def border(self, borderWidth: int, borderColor: vars.RGBvalue):
-        self.widgetBorderWidth = borderWidth
-        self.widgetBorderColor : borderColor    
+        self.widgetBorderWidth = ScreenUnit.checkIfValidScreenUnit(borderWidth)
+        self.widgetBorderColor = borderColor    
         
     def isMouseOver(self):
         return Interactions.isMouseOver(self.widgetRect)
@@ -36,14 +37,14 @@ class _baseWidget:
         return Interactions.rectInRect(rect, self.widgetRect)
     
     def addBorderOnHover(self, borderWidth: int, borderColor: vars.RGBvalue):
-        self._addBorderOnEvent(self.isMouseOver, borderWidth, borderColor)
+        self._addBorderOnEvent(self.isMouseOver, ScreenUnit.checkIfValidScreenUnit(borderWidth), borderColor)
             
     def addBorderOnClick(self, borderWidth: int, borderColor: vars.RGBvalue):
         self._addBorderOnEvent(self.isClicked, borderWidth, borderColor)
     
     def _addBorderOnEvent(self, event, borderWidth: int, borderColor: vars.RGBvalue):
         if event():
-            Draw.borderFromRect(self.borderRect, borderWidth, borderColor, self.widgetBorderRadius)
+            Draw.borderFromRect(self.borderRect, ScreenUnit.checkIfValidScreenUnit(borderWidth), borderColor, self.widgetBorderRadius)
       
     def changeBorderOnHover(self, borderColor: vars.RGBvalue):
         self._changeBorderOnEvent(self.isMouseOver, borderColor)
@@ -58,6 +59,7 @@ class _baseWidget:
             self.border(self.widgetBorderWidth, self.widgetBorderColor)
 
     def widgetPlace(self, left, top):
+        left, top = ScreenUnit.convertMultipleUnits(left, top)
         self.widgetRect = pygame.Rect(left, top, self.widgetSize[0], self.widgetSize[1])
         self.borderRect = pygame.Rect(left - self.widgetBorderWidth / 2, top - self.widgetBorderWidth / 2, self.widgetSize[0] + self.widgetBorderWidth, self.widgetSize[1] + self.widgetBorderWidth)
         
@@ -66,6 +68,7 @@ class _baseWidget:
 
             
     def resize(self, width, height):
+        width, height = ScreenUnit.convertMultipleUnits(width, height)
         self.widgetSize = [width, height]
         
     @property

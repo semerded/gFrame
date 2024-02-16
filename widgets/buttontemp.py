@@ -2,6 +2,7 @@ from importer import pygame
 import vars
 from components.draw import Draw
 from components.interactions import Interactions
+from components.screenUnits import ScreenUnit
 from widgets.image import Image
 from elements.fonts import Font
 from elements.colors import Color
@@ -27,6 +28,11 @@ class Button(_ColoredWidget):
                      borderWidth: int = 0,
                      borderColor: vars.RGBvalue = Color.BLACK,
                      ) -> bool:
+        
+        size = ScreenUnit.convertMultipleUnits(*size)
+        position = ScreenUnit.convertMultipleUnits(*position)
+        borderWidth = ScreenUnit.checkIfValidScreenUnit(borderWidth)
+        cornerRadius = ScreenUnit.checkIfValidScreenUnit(cornerRadius)
         
         buttonRect = Draw.rectangle(position[0], position[1], size[0], size[1], backgroundColor, cornerRadius)
         if borderWidth > 0:
@@ -55,12 +61,13 @@ class Button(_ColoredWidget):
             vars.mainDisplay.blit(self.textSurface, (textPosX, textPosY))
     
     def place(self, left, top):
+        left, top = ScreenUnit.convertMultipleUnits(left, top)
         Draw.rectangleFromRect(self.widgetRect, self.widgetColor, Draw.calculateInnerBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
         self._placeText()
         
         if self.buttonIcon != None:
             self.buttonIcon.place(left, top)
-        self.widgetPlace()
+        self.widgetPlace(left, top)
             
         
     

@@ -1,5 +1,6 @@
 from importer import pygame
 from elements.enums import aspectRatios
+from components.screenUnits import ScreenUnit
 import vars
 try:
     import PIL.Image
@@ -11,6 +12,7 @@ else:
 class Display:
     if PILimported:
         def getPixelColorFromBackground(left: int, top: int) -> vars.RGBvalue:
+            left, top = ScreenUnit.convertMultipleUnits(left, top)
             displayString = pygame.image.tostring(vars.mainDisplay, 'RGB')
             displayByte = PIL.Image.frombytes('RGB', (vars.appWidth, vars.appHeight), displayString)
             return displayByte.getpixel((left, top))
@@ -19,12 +21,12 @@ class Display:
         vars.mainDisplay.fill(color)
         
     def set(width, height, *flags):
-        vars.appWidth = width
-        vars.appHeight = height
+        vars.appWidth, vars.appHeight = ScreenUnit.convertMultipleUnits(width, height)
         vars.appFlags = flags
-        vars.mainDisplay = pygame.display.set_mode((width, height), *flags)
+        vars.mainDisplay = pygame.display.set_mode((vars.appWidth, vars.appHeight), *flags)
         
     def setMinimumScreenDimension(minimumScreenWidth: vars.validScreenUnit = None, minimumScreenHeight: vars.validScreenUnit = None):
+        minimumScreenWidth, minimumScreenHeight = ScreenUnit.convertMultipleUnits(minimumScreenWidth, minimumScreenHeight)
         vars.minimumScreenWidth = minimumScreenWidth if minimumScreenWidth != None else None
         vars.minimumScreenHeight = minimumScreenHeight if minimumScreenHeight != None else None
         

@@ -12,6 +12,8 @@ class _AspectRatio:
     def setAspectRatio(self, aspectRatio: str | float | aspectRatios, width: int = None, height: int = None):
         if isinstance(aspectRatio, aspectRatios):
             aspectRatio = aspectRatio.value
+        width, height = ScreenUnit.convertMultipleUnits(width, height)
+        
         self.aspectRatioActive = True
         self._getAspectRatio(aspectRatio)
         self._getAxis(width, height)
