@@ -132,7 +132,7 @@ class AppConstructor:
     def isScreenResized(self):
         return vars.windowResized
     
-    def fill(color: vars.RGBvalue):
+    def fill(self, color: vars.RGBvalue):
         "does the same thing as `game.Display.fill()`"
         Display.fill(color)
         
