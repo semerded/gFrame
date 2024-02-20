@@ -3,7 +3,7 @@ import vars
 from components.draw import Draw
 from components.interactions import Interactions
 from components.screenUnits import ScreenUnit
-from widgets.image import Image
+from widgets._baseImage import _BaseImage
 from elements.fonts import Font
 from elements.colors import Color
 from elements.enums import mouseButton, overFlow
@@ -48,11 +48,11 @@ class Button(_ColoredWidget):
         self.buttonTextColor = color
         
     def icon(self, iconPath: str):
-        self.buttonIcon = Image(iconPath)
+        self.buttonIcon = _BaseImage(iconPath)
         self._resizeIcon()
                 
     def _resizeIcon(self):
-        self.buttonIcon.resize(self.widgetSize[0], self.widgetSize[1])
+        self.buttonIcon.resizeImage(self.widgetSize[0], self.widgetSize[1])
     
     def _placeText(self):
         if self.buttonText != None:
@@ -62,11 +62,12 @@ class Button(_ColoredWidget):
     
     def place(self, left, top):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
-        self._colordWidgetPlace(left, top)
+        self._colordWidgetPlace(left, top, False)
         self._placeText()
         
         if self.buttonIcon != None:
-            self.buttonIcon.place(left, top)
+            self.buttonIcon._baseImagePlace(left, top)
+        self._BaseWidgetPlace(left, top)
             
         
     

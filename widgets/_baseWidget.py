@@ -7,7 +7,7 @@ from components.draw import Draw
 from elements.enums import mouseButton
 from elements.colors import Color
 
-class _baseWidget:
+class _BaseWidget:
     def __init__(self, size: tuple[vars.validScreenUnit, vars.validScreenUnit], borderRadius: int = -1) -> None:
         self.widgetSize = ScreenUnit.convertMultipleUnits(*size) # size
         self.widgetRect: pygame.Rect = pygame.Rect(0, 0, 0, 0)
@@ -64,7 +64,7 @@ class _baseWidget:
         else:
             self.border(self.widgetBorderWidth, self.widgetBorderColor)
 
-    def _baseWidgetPlace(self, left, top):
+    def _BaseWidgetPlace(self, left, top):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
         self.widgetRect = pygame.Rect(left, top, self.widgetSize[0], self.widgetSize[1])
         self.borderRect = pygame.Rect(left - self.widgetBorderWidth / 2, top - self.widgetBorderWidth / 2, self.widgetSize[0] + self.widgetBorderWidth, self.widgetSize[1] + self.widgetBorderWidth)

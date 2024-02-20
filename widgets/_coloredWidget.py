@@ -1,9 +1,9 @@
 from vars import RGBvalue
-from widgets._baseWidget import _baseWidget
+from widgets._baseWidget import _BaseWidget
 from components.draw import Draw
 import vars
 
-class _ColoredWidget(_baseWidget):
+class _ColoredWidget(_BaseWidget):
     def __init__(self, size: tuple[int | float, int | float], color: vars.RGBvalue, borderRadius) -> None:
         super().__init__(size, borderRadius)
         
@@ -29,7 +29,8 @@ class _ColoredWidget(_baseWidget):
         else:
             self.widgetColor = self.defaultColor 
             
-    def _colordWidgetPlace(self, left, top):
+    def _colordWidgetPlace(self, left, top, placeBaseWidget: bool = True):
         Draw.rectangleFromRect(self.getRect, self.widgetColor, Draw.calculateInnerBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
-        self._baseWidgetPlace(left, top)
+        if placeBaseWidget:
+            self._BaseWidgetPlace(left, top)
             
