@@ -18,7 +18,7 @@ class _baseWidget:
         self.widgetBorderColor = Color.BLACK
         
     def border(self, borderWidth: int, borderColor: vars.RGBvalue):
-        self.widgetBorderWidth = ScreenUnit.checkIfValidScreenUnit(borderWidth)
+        self.widgetBorderWidth = int(ScreenUnit.checkIfValidScreenUnit(borderWidth))
         self.widgetBorderColor = borderColor    
         
     def isMouseOver(self):
@@ -41,6 +41,9 @@ class _baseWidget:
             
     def addBorderOnClick(self, borderWidth: int, borderColor: vars.RGBvalue):
         self._addBorderOnEvent(self.isClicked, borderWidth, borderColor)
+        
+    def addBorderOnPressing(self, borderWidth: int, borderColor: vars.RGBvalue):
+        self._addBorderOnEvent(self.isPressing, borderWidth, borderColor)
     
     def _addBorderOnEvent(self, event, borderWidth: int, borderColor: vars.RGBvalue):
         if event():
@@ -51,6 +54,9 @@ class _baseWidget:
     
     def changeBorderOnClick(self, borderColor: vars.RGBvalue):
         self._changeBorderOnEvent(self.isClicked, borderColor)
+        
+    def changeBorderOnPressing(self, borderWidth: int, borderColor: vars.RGBvalue):
+        self._changeBorderOnEvent(self.isPressing, borderWidth, borderColor)
     
     def _changeBorderOnEvent(self, event, borderColor: vars.RGBvalue):
         if event():
@@ -58,13 +64,13 @@ class _baseWidget:
         else:
             self.border(self.widgetBorderWidth, self.widgetBorderColor)
 
-    def widgetPlace(self, left, top):
+    def _baseWidgetPlace(self, left, top):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
         self.widgetRect = pygame.Rect(left, top, self.widgetSize[0], self.widgetSize[1])
         self.borderRect = pygame.Rect(left - self.widgetBorderWidth / 2, top - self.widgetBorderWidth / 2, self.widgetSize[0] + self.widgetBorderWidth, self.widgetSize[1] + self.widgetBorderWidth)
         
         if self.widgetBorderWidth > 0:
-            Draw.border(self.widgetBorderWidth, self.widgetRect, self.widgetBorderColor, self.widgetBorderRadius)
+            Draw.borderFromRect(self.widgetRect, self.widgetBorderWidth, self.widgetBorderColor, self.widgetBorderRadius)
 
             
     def resize(self, width, height):
