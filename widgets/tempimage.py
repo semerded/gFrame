@@ -10,7 +10,7 @@ class Image(_BaseImage, _BaseWidget):
     def place(self, left: float, top: float):
         self.resize(*self.getImageSize)
         self._baseImagePlace(left, top)
-        self._BaseWidgetPlace(left, top)
+        self._baseWidgetPlace(left, top)
         
     @property
     def getImageRect(self):

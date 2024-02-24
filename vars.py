@@ -41,3 +41,7 @@ clickedKeys = []
 
 
 scrollValue = 0
+
+
+#? widgets
+widgetAlreadyPressed = False

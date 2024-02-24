@@ -59,6 +59,8 @@ class AppConstructor:
         vars.clickedKeys = []
         vars.releasedKeys = []
         
+        vars.widgetAlreadyPressed = False
+        
         # * get all events
         self.appEvents = pygame.event.get()
         if not self.isFirstFrame():

@@ -22,6 +22,6 @@ from components.scroll import Scroll
 from widgets.button import Button
 # from widgets.text import Text
 # from widgets.slider import Slider
-# from widgets.image import Image
+from widgets.image import Image
 # from widgets.textBox import Textbox
 from components.updating import Updating

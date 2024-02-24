@@ -14,6 +14,8 @@ class _BaseWidget:
         self.borderRect: pygame.Rect = pygame.Rect(0, 0, 0, 0)
         self.widgetBorderRadius = ScreenUnit.checkIfValidScreenUnit(borderRadius)
         
+        self.deActivated = False
+        
         self.widgetBorderWidth = 0
         self.widgetBorderColor = Color.BLACK
         
@@ -21,16 +23,26 @@ class _BaseWidget:
         self.widgetBorderWidth = int(ScreenUnit.checkIfValidScreenUnit(borderWidth))
         self.widgetBorderColor = borderColor    
         
-    def isMouseOver(self):
-        return Interactions.isMouseOver(self.widgetRect)
+    def isMouseOver(self, overWriteWidgetPressRegistration: bool = False):
+        if not self.deActivated or not vars.widgetAlreadyPressed:
+            return Interactions.isMouseOver(self.widgetRect)
+        return False
     
-    def isClicked(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
+    def isClicked(self, mouseButton: mouseButton = mouseButton.leftMouseButton, overWriteWidgetPressRegistration: bool = False):
+        if not overWriteWidgetPressRegistration and (self.deActivated or vars.widgetAlreadyPressed):
+            return False
+        vars.widgetAlreadyPressed = True
         return Interactions.isMouseClickedInRect(mouseButton, self.widgetRect)
     
-    def isReleased(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
+    def isReleased(self, mouseButton: mouseButton = mouseButton.leftMouseButton, overWriteWidgetPressRegistration: bool = False):
+        if not overWriteWidgetPressRegistration and (self.deActivated or vars.widgetAlreadyPressed):
+            return False
         return Interactions.isMouseReleasedInRect(mouseButton, self.widgetRect)
     
-    def isPressing(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
+    def isPressing(self, mouseButton: mouseButton = mouseButton.leftMouseButton, overWriteWidgetPressRegistration: bool = False):
+        if not overWriteWidgetPressRegistration and (self.deActivated or vars.widgetAlreadyPressed):
+            return False        
+        vars.widgetAlreadyPressed = True
         return Interactions.isMousePressingInRect(mouseButton, self.widgetRect)
     
     def inRect(self, rect: pygame.Rect):
@@ -46,8 +58,9 @@ class _BaseWidget:
         self._addBorderOnEvent(self.isPressing, borderWidth, borderColor)
     
     def _addBorderOnEvent(self, event, borderWidth: int, borderColor: vars.RGBvalue):
-        if event():
-            Draw.borderFromRect(self.borderRect, ScreenUnit.checkIfValidScreenUnit(borderWidth), borderColor, self.widgetBorderRadius)
+        if not self.deActivated:
+            if event():
+                Draw.borderFromRect(self.borderRect, ScreenUnit.checkIfValidScreenUnit(borderWidth), borderColor, self.widgetBorderRadius)
       
     def changeBorderOnHover(self, borderColor: vars.RGBvalue):
         self._changeBorderOnEvent(self.isMouseOver, borderColor)
@@ -59,12 +72,13 @@ class _BaseWidget:
         self._changeBorderOnEvent(self.isPressing, borderWidth, borderColor)
     
     def _changeBorderOnEvent(self, event, borderColor: vars.RGBvalue):
-        if event():
-            self.border(self.widgetBorderWidth, borderColor)
-        else:
-            self.border(self.widgetBorderWidth, self.widgetBorderColor)
+        if not self.deActivated:
+            if event():
+                self.border(self.widgetBorderWidth, borderColor)
+            else:
+                self.border(self.widgetBorderWidth, self.widgetBorderColor)
 
-    def _BaseWidgetPlace(self, left, top):
+    def _baseWidgetPlace(self, left, top):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
         self.widgetRect = pygame.Rect(left, top, self.widgetSize[0], self.widgetSize[1])
         self.borderRect = pygame.Rect(left - self.widgetBorderWidth / 2, top - self.widgetBorderWidth / 2, self.widgetSize[0] + self.widgetBorderWidth, self.widgetSize[1] + self.widgetBorderWidth)
@@ -77,6 +91,12 @@ class _BaseWidget:
         width, height = ScreenUnit.convertMultipleUnits(width, height)
         self.widgetSize = [width, height]
         
+    def enable(self):
+        self.deActivated = False
+        
+    def disable(self):
+        self.deActivated = True
+        
     @property
     def getRect(self):
         return self.widgetRect
@@ -84,4 +104,8 @@ class _BaseWidget:
     @property
     def getBorderRect(self):
         return self.borderRect
+    
+    @property
+    def getWidgetStatus(self):
+        return not self.deActivated
            

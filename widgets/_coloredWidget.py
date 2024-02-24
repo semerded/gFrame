@@ -1,6 +1,7 @@
 from vars import RGBvalue
 from widgets._baseWidget import _BaseWidget
 from components.draw import Draw
+from elements.colors import Color
 import vars
 
 class _ColoredWidget(_BaseWidget):
@@ -9,6 +10,9 @@ class _ColoredWidget(_BaseWidget):
         
         self.widgetColor = color
         self.defaultColor = color
+        
+        self.disableColor = Color.GREY
+
     
     def updateColor(self, newColor: vars.RGBvalue):
         self.widgetColor = newColor
@@ -24,13 +28,24 @@ class _ColoredWidget(_BaseWidget):
         self._changeColorOnEvent(self.isPressing(), clickColor)
             
     def _changeColorOnEvent(self, event, clickColor: vars.RGBvalue):
-        if event():
-            self.widgetColor = clickColor
-        else:
-            self.widgetColor = self.defaultColor 
+        if not self.deActivated:
+            if event():
+                self.widgetColor = clickColor
+            else:
+                self.widgetColor = self.defaultColor 
+                
+    def disable(self, disableColor: vars.RGBvalue = Color.GRAY):
+        super().disable()
+        self.disableColor = disableColor
+    
+    def enable(self):
+        super().enable()
             
     def _colordWidgetPlace(self, left, top, placeBaseWidget: bool = True):
+        if not self.getWidgetStatus:
+            self.widgetColor = self.disableColor
+                        
         Draw.rectangleFromRect(self.getRect, self.widgetColor, Draw.calculateInnerBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
         if placeBaseWidget:
-            self._BaseWidgetPlace(left, top)
+            self._baseWidgetPlace(left, top)
             

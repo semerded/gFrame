@@ -16,6 +16,7 @@ class Button(_ColoredWidget):
         self.buttonText = None
         self.buttonIcon = None
         self.textSurface = pygame.Surface((0, 0))
+        self.disableColor = Color.GREY
         
     # static
     def simpleButton(size,
@@ -59,15 +60,18 @@ class Button(_ColoredWidget):
             self.textSurface = self.buttonTextFont.render(self.buttonText, True, self.buttonTextColor)
             textPosX, textPosY = Text.centerTextInRect(self.textSurface, self.widgetRect)
             vars.mainDisplay.blit(self.textSurface, (textPosX, textPosY))
+            
+    
     
     def place(self, left, top):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
+            
         self._colordWidgetPlace(left, top, False)
         self._placeText()
         
         if self.buttonIcon != None:
             self.buttonIcon._baseImagePlace(left, top)
-        self._BaseWidgetPlace(left, top)
+        self._baseWidgetPlace(left, top)
             
         
     
