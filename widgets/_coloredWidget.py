@@ -41,11 +41,15 @@ class _ColoredWidget(_BaseWidget):
     def enable(self):
         super().enable()
             
-    def _colordWidgetPlace(self, left, top, placeBaseWidget: bool = True):
+    def _colordWidgetPlace(self, left, top, opacity: float = 1.0, placeBaseWidget: bool = True):
         if not self.getWidgetStatus:
             self.widgetColor = self.disableColor
-                        
-        Draw.rectangleFromRect(self.getRect, self.widgetColor, Draw.calculateInnerBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
+
+        if opacity >= 1:
+            Draw.rectangleFromRect(self.getRect, self.widgetColor, Draw.calculateInnerBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
+        else: 
+            Draw.transparantRectangleFromRect(self.getRect, opacity, self.widgetColor)   
+        
         if placeBaseWidget:
             self._baseWidgetPlace(left, top)
             
