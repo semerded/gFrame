@@ -64,22 +64,8 @@ class AppConstructor:
         # * get all events
         self.appEvents = pygame.event.get()
         if not self.isFirstFrame():
-            for event in self.appEvents:
-                if event.type == pygame.QUIT:
-                    if self.modifiableFunctions["quit"] == None:
-                        pygame.quit()
-                        sys.exit()
-                    else:
-                        self.modifiableFunctions["quit"]()
-                
-                elif event.type == pygame.WINDOWRESIZED:
-                    vars.windowResized = True
-                    if vars.minimumScreenWidth != None or vars.minimumScreenHeight != None:
-                        Display.checkForMinimumScreenSizeBreaches()
-                    if vars.aspectRatioObject.aspectRatioActive:
-                        vars.aspectRatioObject.updateAspectRatio()
-                
-                elif event.type == pygame.MOUSEBUTTONDOWN:  
+            for event in self.appEvents:                
+                if event.type == pygame.MOUSEBUTTONDOWN:  
                     vars.mouseFlank[event.button] = True
                     vars.mouseButtonsStatus[event.button] = True
                 
@@ -94,6 +80,20 @@ class AppConstructor:
                 elif event.type == pygame.KEYUP:
                     index = vars.activeKeys.index(event.button)
                     vars.releasedKeys.append(vars.activeKeys.pop(index))
+                    
+                elif event.type == pygame.WINDOWRESIZED:
+                    vars.windowResized = True
+                    if vars.minimumScreenWidth != None or vars.minimumScreenHeight != None:
+                        Display.checkForMinimumScreenSizeBreaches()
+                    if vars.aspectRatioObject.aspectRatioActive:
+                        vars.aspectRatioObject.updateAspectRatio()
+                        
+                elif event.type == pygame.QUIT:
+                    if self.modifiableFunctions["quit"] == None:
+                        pygame.quit()
+                        sys.exit()
+                    else:
+                        self.modifiableFunctions["quit"]()
                                 
                 if event.type == pygame.MOUSEWHEEL:
                     vars.scrollValue = event.y

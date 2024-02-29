@@ -33,9 +33,10 @@ class Draw:
         left, top = ScreenUnit.convertMultipleUnits(left, top)
         return Draw.rectangle(left, top, 1, 1, color)
     
-    def calculateOuterBorderRadius(outerBorderRadius, borderWidth):
-        outerBorderRadius, borderWidth = ScreenUnit.convertMultipleUnits(outerBorderRadius, borderWidth)
-        return outerBorderRadius + borderWidth
+    def calculateOuterBorderRadius(innerBorderRadius, borderWidth):
+        innerBorderRadius, borderWidth = ScreenUnit.convertMultipleUnits(innerBorderRadius, borderWidth)
+        outerBorderRadius = innerBorderRadius + borderWidth
+        return outerBorderRadius if innerBorderRadius > 0 else 0
     
     def pointInPolygon(point: list | tuple, polygon: list | tuple[list | tuple]) -> bool:
         num_vertices = len(polygon)
