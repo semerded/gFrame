@@ -41,7 +41,7 @@ class _ColoredWidget(_BaseWidget):
     def enable(self):
         super().enable()
             
-    def _colordWidgetPlace(self, left, top, opacity: float = 1.0, placeBaseWidget: bool = True):
+    def _colordWidgetPlace(self, left, top, opacity: int = 255, placeBaseWidget: bool = True):
         if not self.getWidgetStatus:
             self.widgetColor = self.disableColor
 

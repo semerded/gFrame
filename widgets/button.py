@@ -66,7 +66,7 @@ class Button(_ColoredWidget):
     def place(self, left, top):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
             
-        self._colordWidgetPlace(left, top, False)
+        self._colordWidgetPlace(left, top, True)
         self._placeText()
         
         if self.buttonIcon != None:
