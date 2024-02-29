@@ -12,6 +12,9 @@ class Image(_BaseImage, _BaseWidget):
         self._baseImagePlace(left, top)
         self._baseWidgetPlace(left, top)
         
+    def resize(self, width, height):
+        return super().resize(width, height)
+        
     @property
     def getImageRect(self):
         return pygame.Rect(*self.imagePosition, *self.getImageSize)

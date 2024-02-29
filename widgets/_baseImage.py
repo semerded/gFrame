@@ -7,16 +7,16 @@ class _BaseImage:
         self.image = pygame.image.load(fileName, nameHint)
         self.imageSize = self.getImageSize
         
-    def resizeImageAndKeepProportions(self, width: float, height: float):
+    def resizeAndKeepProportions(self, width: float, height: float):
         aspectRatio = self.getAspectRatio
         imageWidth, imageHeight = self.getImageSize
         if aspectRatio < 1:
             width = int(imageWidth * aspectRatio)
         else:
             height = int(imageHeight / aspectRatio)
-        self.resizeImage(width, height)
+        self.resize(width, height)
         
-    def resizeImage(self, width, height):
+    def resize(self, width, height):
         self.image = pygame.transform.scale(self.image, (width, height))
         self.imageSize = self.getImageSize
         
