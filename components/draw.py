@@ -2,6 +2,7 @@ from importer import pygame
 import vars
 from elements.colors import Color
 from components.screenUnits import ScreenUnit
+from math import sqrt
 
 class Draw:
     def rectangle(left: float, top: float, width: float, height: float, color: vars.RGBvalue = Color.LIGHT_GRAY, cornerRadius: int = -1):
@@ -12,7 +13,7 @@ class Draw:
         return Draw.rectangle(rect.x, rect.y, rect.width, rect.height, color, cornerRadius)
     
     def transparantRectangle(left: float, top: float, width: float, height: float, transparancy: int, color: vars.RGBvalue = Color.LIGHT_GRAY):
-        left, top, width, height, cornerRadius = ScreenUnit.convertMultipleUnits(left, top, width, height, cornerRadius)
+        left, top, width, height = ScreenUnit.convertMultipleUnits(left, top, width, height)
         rectangle = pygame.Surface((width, height))
         rectangle.set_alpha(transparancy)
         rectangle.fill(color)
@@ -32,10 +33,9 @@ class Draw:
         left, top = ScreenUnit.convertMultipleUnits(left, top)
         return Draw.rectangle(left, top, 1, 1, color)
     
-    def calculateInnerBorderRadius(outerBorderRadius, borderWidth):
+    def calculateOuterBorderRadius(outerBorderRadius, borderWidth):
         outerBorderRadius, borderWidth = ScreenUnit.convertMultipleUnits(outerBorderRadius, borderWidth)
-        innerBorderRadius = (outerBorderRadius - borderWidth)
-        return innerBorderRadius if innerBorderRadius > 0 else 0
+        return outerBorderRadius + borderWidth
     
     def pointInPolygon(point: list | tuple, polygon: list | tuple[list | tuple]) -> bool:
         num_vertices = len(polygon)
@@ -55,3 +55,5 @@ class Draw:
             p1 = p2
         return inside
     
+    def distanceBetweenPoints(point1: tuple[int], point2: tuple[int]):
+        return sqrt((point1[1] - point1[0]) ** 2 + (point2[1] - point2[0]) ** 2)
