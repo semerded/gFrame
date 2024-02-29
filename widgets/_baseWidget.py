@@ -84,7 +84,7 @@ class _BaseWidget:
         self.borderRect = pygame.Rect(left - self.widgetBorderWidth / 2, top - self.widgetBorderWidth / 2, self.widgetSize[0] + self.widgetBorderWidth, self.widgetSize[1] + self.widgetBorderWidth)
         
         if self.widgetBorderWidth > 0:
-            Draw.borderFromRect(self.widgetRect, self.widgetBorderWidth, self.widgetBorderColor, self.widgetBorderRadius)
+            Draw.borderFromRect(self.widgetRect, self.widgetBorderWidth, self.widgetBorderColor, Draw.calculateOuterBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
 
             
     def resize(self, width, height):

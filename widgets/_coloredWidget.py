@@ -46,7 +46,7 @@ class _ColoredWidget(_BaseWidget):
             self.widgetColor = self.disableColor
 
         if opacity >= 1:
-            Draw.rectangleFromRect(self.getRect, self.widgetColor, Draw.calculateInnerBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
+            Draw.rectangleFromRect(self.getRect, self.widgetColor, self.widgetBorderRadius)
         else: 
             Draw.transparantRectangleFromRect(self.getRect, opacity, self.widgetColor)   
         
