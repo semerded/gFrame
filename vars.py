@@ -45,3 +45,7 @@ scrollValue = 0
 
 #? widgets
 widgetAlreadyPressed = False
+
+
+#? debugger
+debugTimePoints = []
