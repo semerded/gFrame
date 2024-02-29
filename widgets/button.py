@@ -19,6 +19,7 @@ class Button(_ColoredWidget):
         self.disableColor = Color.GREY
         
     # static
+    @staticmethod
     def simpleButton(size,
                      position, 
                      backgroundColor: vars.RGBvalue = Color.LIGHT_GRAY, 
