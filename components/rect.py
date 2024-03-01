@@ -10,5 +10,3 @@ class Rect(pygame.Rect):
             positionCord = ScreenUnit.convertMultipleUnits(*args[0])
             size = ScreenUnit.convertMultipleUnits(*args[1])
             super().__init__(positionCord, size)
-
-

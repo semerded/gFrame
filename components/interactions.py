@@ -1,6 +1,8 @@
 from importer import pygame
 from elements.enums import mouseButton
 from components.draw import Draw
+from components.rect import Rect
+
 import vars
 
 class Interactions:
@@ -25,11 +27,11 @@ class Interactions:
 
 
     # area detection
-    def isMouseOver(rect: pygame.Rect) -> bool:
+    def isMouseOver(rect: Rect) -> bool:
         return rect.collidepoint(pygame.mouse.get_pos())
     
     def isMouseInArea(topCord: int, bottomCord: int) -> bool:
-        rect = pygame.Rect(topCord, bottomCord)
+        rect = Rect(topCord, bottomCord)
         return Interactions.isMouseOver(rect)
     
     def isMouseInPolygon(polygon: list | tuple [vars.coordinate]) -> bool:
@@ -42,7 +44,7 @@ class Interactions:
     def isMouseClicked(mouseButton: mouseButton) -> bool:
         return Interactions._posFlank(mouseButton)
     
-    def isMouseClickedInRect(mouseButton: mouseButton, rect: pygame.Rect) -> bool:
+    def isMouseClickedInRect(mouseButton: mouseButton, rect: Rect) -> bool:
         return Interactions.isMouseOver(rect) and Interactions.isMouseClicked(mouseButton)
     
     def isMouseClickedInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
@@ -55,7 +57,7 @@ class Interactions:
     def isMouseReleased(mouseButton: mouseButton) -> bool:
         return Interactions._negFlank(mouseButton)
     
-    def isMouseReleasedInRect(mouseButton: mouseButton, rect: pygame.Rect) -> bool:
+    def isMouseReleasedInRect(mouseButton: mouseButton, rect: Rect) -> bool:
         return Interactions.isMouseOver(rect) and Interactions.isMouseReleasedeased(mouseButton)
     
     def isMouseReleasedInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
@@ -69,7 +71,7 @@ class Interactions:
     def isMousePressing(mouseButton: mouseButton):
         return Interactions._pressed(mouseButton)
     
-    def isMousePressingInRect(mouseButton: mouseButton, rect: pygame.Rect):
+    def isMousePressingInRect(mouseButton: mouseButton, rect: Rect):
         return Interactions.isMouseOver(rect) and Interactions._pressed(mouseButton)
     
     def isMousePressingInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]):
@@ -101,7 +103,7 @@ class Interactions:
         return key in vars.activeKeys
     
     # other
-    def rectInRect(masterRect: pygame.Rect, childRect: pygame.Rect):
+    def rectInRect(masterRect: Rect, childRect: Rect):
         return masterRect.colliderect(childRect)
     
     

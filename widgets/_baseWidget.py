@@ -10,8 +10,8 @@ from elements.colors import Color
 class _BaseWidget:
     def __init__(self, size: tuple[vars.validScreenUnit, vars.validScreenUnit], borderRadius: int = -1) -> None:
         self.widgetSize = ScreenUnit.convertMultipleUnits(*size) # size
-        self.widgetRect: pygame.Rect = pygame.Rect(0, 0, 0, 0)
-        self.borderRect: pygame.Rect = pygame.Rect(0, 0, 0, 0)
+        self.widgetRect: Rect = Rect(0, 0, 0, 0)
+        self.borderRect: Rect = Rect(0, 0, 0, 0)
         self.widgetBorderRadius = ScreenUnit.checkIfValidScreenUnit(borderRadius)
         
         self.deActivated = False
@@ -63,7 +63,7 @@ class _BaseWidget:
             return Interactions.isMouseReleasedInRect(mouseButton, self.widgetRect)
         return False
     
-    def inRect(self, rect: pygame.Rect):
+    def inRect(self, rect: Rect):
         return Interactions.rectInRect(rect, self.widgetRect)
     
     def addBorderOnHover(self, borderWidth: int, borderColor: vars.RGBvalue):
@@ -98,8 +98,8 @@ class _BaseWidget:
 
     def _baseWidgetPlace(self, left, top):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
-        self.widgetRect = pygame.Rect(left, top, self.widgetSize[0], self.widgetSize[1])
-        self.borderRect = pygame.Rect(left - self.widgetBorderWidth / 2, top - self.widgetBorderWidth / 2, self.widgetSize[0] + self.widgetBorderWidth, self.widgetSize[1] + self.widgetBorderWidth)
+        self.widgetRect = Rect(left, top, self.widgetSize[0], self.widgetSize[1])
+        self.borderRect = Rect(left - self.widgetBorderWidth / 2, top - self.widgetBorderWidth / 2, self.widgetSize[0] + self.widgetBorderWidth, self.widgetSize[1] + self.widgetBorderWidth)
         
         if self.widgetBorderWidth > 0:
             Draw.borderFromRect(self.widgetRect, self.widgetBorderWidth, self.widgetBorderColor, Draw.calculateOuterBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))

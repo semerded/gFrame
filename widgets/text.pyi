@@ -3,6 +3,7 @@ from importer import pygame
 from elements.enums import overFlow, hoverSpeed, xTextPositioning, yTextPositioning
 from elements.fonts import Font
 from elements.colors import Color
+from components.rect import Rect
 import vars
 
 class Text:
@@ -21,7 +22,7 @@ class Text:
     def simpleText(text: str, left: vars.validScreenUnit, top: vars.validScreenUnit, font: pygame.font.Font = Font.H3, color: vars.RGBvalue = Color.BLACK, bold: bool = False, italic: bool = False): ...
     
     @staticmethod
-    def centerTextInRect(textSurface: pygame.Surface, rect: pygame.Rect):
+    def centerTextInRect(textSurface: pygame.Surface, rect: Rect):
         xPos = rect.x + (rect.width / 2) - (textSurface.get_width() / 2)
         yPos = rect.y + (rect.height / 2) - (textSurface.get_height() / 2)
         return xPos, yPos
@@ -44,9 +45,9 @@ class Text:
     def place(self, left: vars.validScreenUnit, top: vars.validScreenUnit, text: str): ...
 
     @overload
-    def placeInRect(self, rect: pygame.Rect, xPositioning: xTextPositioning, yPositioning: yTextPositioning): ...
+    def placeInRect(self, rect: Rect, xPositioning: xTextPositioning, yPositioning: yTextPositioning): ...
     @overload
-    def placeInRect(self, rect: pygame.Rect, xPositioning: xTextPositioning, yPositioning: yTextPositioning, text: str): ...
+    def placeInRect(self, rect: Rect, xPositioning: xTextPositioning, yPositioning: yTextPositioning, text: str): ...
     
     
     @property

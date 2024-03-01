@@ -14,7 +14,7 @@ class Slider:
         self.sliderSize = size
         self.sliderColor = color
         self.sliderBorderRadius = borderRadius
-        self.sliderRect = pygame.Rect(0, 0, 0, 0)
+        self.sliderRect = Rect(0, 0, 0, 0)
         self.sliderPosition = sliderMin if minSliderValue == None else startValue
         self.borderWidth = 0
         self.clickedInRect = False
@@ -31,8 +31,8 @@ class Slider:
         Interactions.onMouseClickInRect(self.sliderRect, mouseButton.leftMouseButton)
     
     def place(self, left, top):
-        self.sliderRect = pygame.Rect(left, top, self.sliderSize[0], self.sliderSize[1])
-        self.fullRect = pygame.Rect(left - self.borderWidth / 2, top - self.borderWidth / 2, self.sliderSize[0] + self.borderWidth, self.sliderSize[1] + self.borderWidth)
+        self.sliderRect = Rect(left, top, self.sliderSize[0], self.sliderSize[1])
+        self.fullRect = Rect(left - self.borderWidth / 2, top - self.borderWidth / 2, self.sliderSize[0] + self.borderWidth, self.sliderSize[1] + self.borderWidth)
         
         self._getSliderPosition(left)
         self._placeSliderShell(left, top)

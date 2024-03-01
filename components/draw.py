@@ -1,5 +1,6 @@
 from importer import pygame
 import vars
+from components.rect import Rect
 from elements.colors import Color
 from components.screenUnits import ScreenUnit
 from math import sqrt
@@ -7,9 +8,9 @@ from math import sqrt
 class Draw:
     def rectangle(left: float, top: float, width: float, height: float, color: vars.RGBvalue = Color.LIGHT_GRAY, cornerRadius: int = -1):
         left, top, width, height, cornerRadius = ScreenUnit.convertMultipleUnits(left, top, width, height, cornerRadius)
-        return pygame.draw.rect(vars.mainDisplay, color, pygame.Rect(left, top, width, height), border_radius=int(cornerRadius))
+        return pygame.draw.rect(vars.mainDisplay, color, Rect(left, top, width, height), border_radius=int(cornerRadius))
     
-    def rectangleFromRect(rect: pygame.Rect, color: vars.RGBvalue = Color.LIGHT_GRAY, cornerRadius: int = -1):
+    def rectangleFromRect(rect: Rect, color: vars.RGBvalue = Color.LIGHT_GRAY, cornerRadius: int = -1):
         return Draw.rectangle(rect.x, rect.y, rect.width, rect.height, color, cornerRadius)
     
     def transparantRectangle(left: float, top: float, width: float, height: float, transparancy: int, color: vars.RGBvalue = Color.LIGHT_GRAY):
@@ -19,14 +20,14 @@ class Draw:
         rectangle.fill(color)
         return vars.mainDisplay.blit(rectangle, (left, top))
         
-    def transparantRectangleFromRect(rect: pygame.Rect, transparancy: int, color: vars.RGBvalue = Color.LIGHT_GRAY):
+    def transparantRectangleFromRect(rect: Rect, transparancy: int, color: vars.RGBvalue = Color.LIGHT_GRAY):
         return Draw.transparantRectangle(rect.x, rect.y, rect.width, rect.height, transparancy, color)
         
-    def border(left: float, top: float, width: float, height: float, borderWidth: int, color: vars.RGBvalue = Color.BLACK, cornerRadius: int = -1) -> pygame.Rect:
+    def border(left: float, top: float, width: float, height: float, borderWidth: int, color: vars.RGBvalue = Color.BLACK, cornerRadius: int = -1) -> Rect:
         left, top, width, height, cornerRadius = ScreenUnit.convertMultipleUnits(left, top, width, height, cornerRadius)
-        return pygame.draw.rect(vars.mainDisplay, color, pygame.Rect(left - borderWidth / 2, top - borderWidth / 2, width + borderWidth, height + borderWidth), width=int(borderWidth), border_radius=int(cornerRadius))
+        return pygame.draw.rect(vars.mainDisplay, color, Rect(left - borderWidth / 2, top - borderWidth / 2, width + borderWidth, height + borderWidth), width=int(borderWidth), border_radius=int(cornerRadius))
     
-    def borderFromRect(rect: pygame.Rect, borderWidth: int, color: vars.RGBvalue = Color.BLACK, cornerRadius: int = -1):
+    def borderFromRect(rect: Rect, borderWidth: int, color: vars.RGBvalue = Color.BLACK, cornerRadius: int = -1):
         return Draw.border(rect.x, rect.y, rect.width, rect.height, borderWidth, color, cornerRadius)
     
     def pixel(left: vars.validScreenUnit, top: vars.validScreenUnit, color: vars.RGBvalue):

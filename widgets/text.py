@@ -4,6 +4,7 @@ from elements.colors import Color
 from elements.fonts import Font
 from components.draw import Draw
 from components.screenUnits import ScreenUnit
+from components.rect import Rect
 import vars
 
 
@@ -19,7 +20,7 @@ class Text:
     
     antiAllias: bool = True
 
-    textRect: pygame.Rect = pygame.Rect(0, 0, 0, 0)
+    textRect: Rect = Rect(0, 0, 0, 0)
     
     def __init__(self, *args, bold = False, italic = False):
         fontSize = int(ScreenUnit.checkIfValidScreenUnit(args[2]))
@@ -74,7 +75,7 @@ class Text:
         return vars.mainDisplay.blit(font.render(f"{text}", True, color), (left, top))
     
     @staticmethod
-    def centerTextInRect(textSurface: pygame.Surface, rect: pygame.Rect):
+    def centerTextInRect(textSurface: pygame.Surface, rect: Rect):
         xPos = rect.x + (rect.width / 2) - (textSurface.get_width() / 2)
         yPos = rect.y + (rect.height / 2) - (textSurface.get_height() / 2)
         return xPos, yPos
@@ -139,7 +140,7 @@ class Text:
             self.text = args[2]
         left, top = ScreenUnit.convertMultipleUnits(args[0], args[1])
         top = self._textHover(top)
-        self.textRect = pygame.Rect(left, top, self.textWidth + 6, self.textHeight + 6)
+        self.textRect = Rect(left, top, self.textWidth + 6, self.textHeight + 6)
         self._drawBase()
         vars.mainDisplay.blit(self.textSurface, (left + 3, top + 3))
         
@@ -148,13 +149,13 @@ class Text:
         if len(args) == 4:
             self.text = args[3]
         # top = self._textHover(top) # TODO add hover
-        _rect: pygame.Rect = args[0]
-        self.textRect = pygame.Rect(_rect.x, _rect.y, _rect.width + 6, _rect.height + 6)
+        _rect: Rect = args[0]
+        self.textRect = Rect(_rect.x, _rect.y, _rect.width + 6, _rect.height + 6)
         x, y = self._calculateTextPositioning(self.textRect, args[1], args[2])
         self._drawBase()
         vars.mainDisplay.blit(self.textSurface, (x + 3, y + 3))
         
-    def _calculateTextPositioning(self, rect: pygame.Rect, xPositioning, yPositioning):
+    def _calculateTextPositioning(self, rect: Rect, xPositioning, yPositioning):
         if xPositioning == xTextPositioning.center:
             x = rect.x + (rect.width / 2) - (self.textWidth / 2)
         elif xPositioning == xTextPositioning.right:

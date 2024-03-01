@@ -17,7 +17,7 @@ class Image(_BaseImage, _BaseWidget):
         
     @property
     def getImageRect(self):
-        return pygame.Rect(*self.imagePosition, *self.getImageSize)
+        return Rect(*self.imagePosition, *self.getImageSize)
     
     
     
