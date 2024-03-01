@@ -10,6 +10,7 @@ from elements.colors import *
 from elements.enums import *
 from elements.fonts import *
 
+from components.rect import Rect
 from components.display import Display
 from components.appConstructor import AppConstructor
 from components.animate import Animate
