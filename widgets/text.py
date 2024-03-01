@@ -1,22 +1,51 @@
 from importer import pygame
-from elements.fonts import *
-from elements.enums import overFlow, mouseButton
+from elements.enums import overFlow, xTextPositioning, yTextPositioning, hoverSpeed
 from elements.colors import Color
-import vars
-from components.interactions import Interactions
+from elements.fonts import Font
+from components.draw import Draw
 from components.screenUnits import ScreenUnit
+import vars
+
 
 class Text:
-    def __init__(self, font: pygame.font, color: vars.RGBvalue) -> None:
-        self.font = font
-        self.textColor = color
-        self.hoveringUp = True
-        self.hoverDistance = 0
-        self.position = [0, 0]
-        self._antiAllias = True
+    def __init__(self, text: str, fontName_or_path: str, fontSize: int, color: vars.RGBvalue, bold: bool = False, italic: bool = False) -> None:
+        if isinstance(fontName_or_path, str): # check if classmethod is used
+            try:
+                self.font = pygame.font.SysFont(fontName_or_path, fontSize, bold, italic)
+            except:
+                self.font = pygame.font.Font(fontName_or_path, fontSize)
+                self.font.bold = bold
+                self.font.italic = italic
+        else:
+            self.font: pygame.font.Font = fontName_or_path
+            self.font.bold = bold
+            self.font.italic = italic
 
+        self.color = color
+        self.backgroundColor = None
+        
+        self.borderColor = None
+        self.borderWidth = None
+        self.borderRadius = -1
+        
+        self.hoverDistance = 0
+        self.hoverSpeed = 0
+        self._hoverDifference = 0
+        self._hoverUp = True
+        
+        self.antiAllias = True
+        
+        self.text = text
+        self._renderText(text)
+        
+        
+        self.textRect = pygame.Rect(0, 0, 0, 0)
+
+    @classmethod 
+    def fromFont(cls, text: str, font: pygame.font, color: vars.RGBvalue, bold: bool = False, italic: bool = False):
+        return cls(text, font, 0, color, bold, italic)
     
-    # static
+    @staticmethod
     def textOverflow(text: str, font: pygame.font, maxWidth: int | float, overFlowType: overFlow = overFlow.ellipsis) -> str:
         if font.size(text)[0] < maxWidth:
             return text
@@ -38,69 +67,100 @@ class Text:
                 newText += letter
             else:
                 return newText.strip() + overFlowTrailing
-        return text
-
-    def simpleText( position: tuple[int,int], text: str, font: pygame.font = Font.H3, color: vars.RGBvalue = Color.BLACK, antiAllias: bool = True):
-        textsurface = font.render(f"{text}", antiAllias, color)       
-        vars.mainDisplay.blit(textsurface, (position[0], position[1]))
-        return textsurface
-
-    def centerTextInRect(textSurface: pygame.Surface, rect: pygame.Rect) -> tuple[float, float]:
-        xPos = rect.x + (rect.width / 2) - (textSurface.get_width() / 2)
-        yPos = rect.y + (rect.height / 2) - (textSurface.get_height() / 2)
-        return xPos, yPos
+            
+    @staticmethod
+    def simpleText(text: str, left: vars.validScreenUnit, top: vars.validScreenUnit, font: pygame.font.Font = Font.H3, color: vars.RGBvalue = Color.BLACK, bold: bool = False, italic: bool = False):
+        font.bold = bold
+        font.italic = italic
+  
+        return vars.mainDisplay.blit(font.render(f"{text}", True, color), (left, top))
+            
+    def setAntiAllias(self, active: bool):
+        self.antiAllias = active
         
-    # instance
-    def renderText(self, text):
-        self.textSurface = self.font.render(text, self._antiAllias, self.textColor)
+    def setBackground(self, backgroundColor: vars.RGBvalue):
+        self.backgroundColor = backgroundColor
         
-    def antiAllias(self, antiAllias: bool):
-        self._antiAllias = antiAllias
-
+    def setTextColor(self, color: vars.RGBvalue):
+        self.color = color
         
-    def color(self, textColor: vars.RGBvalue = None, backgroundColor: vars.RGBvalue = None, borderColor: vars.RGBvalue = None):
-        if textColor != None:
-            self.textColor = textColor
-        if backgroundColor != None:
-            self.backgroundColor = backgroundColor
-        if borderColor != None:
-            self.borderColor = borderColor
+    def setBorder(self, borderWidth: vars.validScreenUnit, borderColor: vars.RGBvalue, borderRadius: vars.validScreenUnit = -1):
+        borderWidth, borderRadius = ScreenUnit.convertMultipleUnits(borderWidth, borderRadius)
+        self.borderWidth = borderWidth
+        self.borderColor = borderColor
+        self.borderRadius = borderRadius
         
-    def place(self, text: str, position):
-        self.renderText(text)
-        self.position = position
-        vars.mainDisplay.blit(self.textSurface, (position[0], position[1]))
-        
-    def centerTextInScreen(self, text):
-        self.renderText(text)
-        vars.mainDisplay.blit(self.textSurface, (ScreenUnit.vw(50) - self.textSurface.get_width() / 2, ScreenUnit.vh(50) - self.textSurface.get_height() / 2))
-    
-    def placeInRect(self, text: str, rect: pygame.Rect | tuple[float, float, float, float]):
-        self.renderText(text)
-        xCord = rect.centerx - (self.textSurface.get_width() / 2)
-        yCord = rect.centery - (self.textSurface.get_height() / 2)
-        self.position = [xCord, yCord]
-        vars.mainDisplay.blit(self.textSurface, (xCord, yCord))
-        
-    def onMouseClick(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
-        if Interactions.onMouseClickInRect(self.getRect, mouseButton):
-            return True
-        return False
-
-    
-    def hover(self, text, rect: pygame.Rect, hoverDistance: int):
-        if self.hoveringUp:
-            self.hoverDistance += 1
+    def setHover(self, hoverDistance: vars.validScreenUnit, speed: int | hoverSpeed = hoverSpeed.normal):
+        self.hoverDistance = ScreenUnit.checkIfValidScreenUnit(hoverDistance)
+        if isinstance(speed, hoverSpeed):
+            self.hoverSpeed = speed.value
         else:
-            self.hoverDistance -= 1
-        if self.hoverDistance > hoverDistance / 2:
-            self.hoveringUp = False
-        if self.hoverDistance < -hoverDistance / 2:
-            self.hoveringUp = True
-        rect = pygame.Rect(rect.left, rect.top, rect.width, rect.height + self.hoverDistance)
-        self.placeInRect(text, rect)
+            self.hoverSpeed = speed
+
+    def setText(self, text: str, bold: bool = False, italic: bool = False):
+        self.text = text
+        self.font.bold = bold
+        self.font.italic = italic
+        self._renderText(text)
+    
+    def _textHover(self, top):
+        if self.hoverDistance > 0:
+            if self._hoverUp:
+                self._hoverDifference += 0.02 * self.hoverSpeed
+            else: 
+                self._hoverDifference -= 0.02 * self.hoverSpeed
+            
+            if self._hoverDifference > self.hoverDistance / 2:
+                self._hoverUp = False
+            if self._hoverDifference < -self.hoverDistance / 2:
+                self._hoverUp = True  
+            return top + self._hoverDifference
         
+        return top
+    
+    def _renderText(self, text: str):
+        self.textSurface = self.font.render(text, self.antiAllias, self.color)
+        self.textHeight = self.textSurface.get_height()
+        self.textWidth = self.textSurface.get_width()
+        
+    def _drawBase(self):
+        if self.backgroundColor != None:
+            Draw.rectangleFromRect(self.textRect, self.backgroundColor, self.borderRadius)
+        if self.borderColor != None and self.borderWidth > 0:
+            Draw.borderFromRect(self.textRect, self.borderWidth, self.borderColor, Draw.calculateOuterBorderRadius(self.borderRadius, self.borderWidth))
+            
+        
+    def place(self, left: vars.validScreenUnit, top: vars.validScreenUnit):
+        left, top = ScreenUnit.convertMultipleUnits(left, top)
+        top = self._textHover(top)
+        self.textRect = pygame.Rect(left, top, self.textWidth + 6, self.textHeight + 6)
+        self._drawBase()
+        vars.mainDisplay.blit(self.textSurface, (left + 3, top + 3))
+        
+    
+    def placeInRect(self, rect: pygame.Rect, xPositioning: xTextPositioning, yPositioning: yTextPositioning):
+        # top = self._textHover(top) # TODO add hover
+        self.textRect = pygame.Rect(rect.x, rect.y, rect.width + 6, rect.height + 6)
+        x, y = self._calculateTextPositioning(rect, xPositioning, yPositioning)
+        self._drawBase()
+        vars.mainDisplay.blit(self.textSurface, (x + 3, y + 3))
+        
+    def _calculateTextPositioning(self, rect: pygame.Rect, xPositioning: xTextPositioning, yPositioning: yTextPositioning):
+        if xPositioning == xTextPositioning.center:
+            x = rect.x + (rect.width / 2) - (self.textWidth / 2)
+        elif xPositioning == xTextPositioning.right:
+            x = (rect.x + rect.width) - self.textWidth
+        else:
+            x = rect.x
+            
+        if yPositioning == yTextPositioning.center:
+            y = rect.y + (rect.height / 2) - (self.textHeight / 2)
+        elif yPositioning == yTextPositioning.bottom:
+            y = (rect.y + rect.height) - self.textHeight
+        else:
+            y = rect.y
+        return x, y
+    
     @property
     def getRect(self):
-        textRect = self.textSurface.get_rect()
-        return pygame.Rect(self.position[0], self.position[1], textRect[2], textRect[3])
+        return self.textRect

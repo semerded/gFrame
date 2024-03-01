@@ -35,3 +35,22 @@ class scrollSpeed(Enum):
     slow = 20
     medium = 40
     fast = 60
+    
+class hoverSpeed(Enum):
+    extraSlow = 5
+    slow = 15
+    normal = 25
+    fast = 40
+    veryFast = 60
+    extreme = 80
+    lightSpeed = 100
+    
+class xTextPositioning(Enum):
+    left = 1
+    center = 2
+    right = 3
+    
+class yTextPositioning(Enum):
+    top = 1
+    center = 2
+    bottom = 3
