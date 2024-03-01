@@ -4,6 +4,7 @@ import vars
 from components.interactions import Interactions
 from components.screenUnits import ScreenUnit
 from components.draw import Draw
+from components.rect import Rect
 from elements.enums import mouseButton
 from elements.colors import Color
 

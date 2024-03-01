@@ -9,8 +9,11 @@ from elements.colors import Color
 from elements.enums import mouseButton, overFlow
 from widgets._coloredWidget import _ColoredWidget
 from widgets.text import Text
+from time import time
 
 class Button(_ColoredWidget):
+    pressingTime = 0
+    
     def __init__(self, size: tuple[vars.validScreenUnit], color: vars.RGBvalue, borderRadius: int = -1) -> None:
         super().__init__(size, color, borderRadius)
         self.buttonText = None
@@ -62,8 +65,14 @@ class Button(_ColoredWidget):
             textPosX, textPosY = Text.centerTextInRect(self.textSurface, self.widgetRect)
             vars.mainDisplay.blit(self.textSurface, (textPosX, textPosY))
             
-    
-    
+    def isHeldFor(self, milliseconds: int):
+        if self.isSuperClicked():
+            self.pressingTime = time()
+        
+        if self.isSuperPressing() and (time() - self.pressingTime > milliseconds / 1000):
+            return True
+        return False
+
     def place(self, left, top, opacity: int = 255):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
             
@@ -73,6 +82,8 @@ class Button(_ColoredWidget):
         if self.buttonIcon != None:
             self.buttonIcon._baseImagePlace(left, top)
         self._baseWidgetPlace(left, top)
-            
-        
+     
+    @property       
+    def getPressingTime(self):
+        self.pressingTime
     

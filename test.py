@@ -39,6 +39,9 @@ while True:
     if button.isClicked():
         print(False)
         
+    if button.isHeldFor(2000):
+        print("held done")
+        
         
     if secondButton.isClicked():
         if button.getWidgetStatus:
