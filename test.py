@@ -8,10 +8,20 @@ button.border("1vw", game.Color.AQUAMARINE)
 button.text("hello")
 # button.icon("test.jpg")
 
-secondButton = game.Button(("10vw", "5vh"), game.Color.RED, 3)
+
+
+roundo = game.RoundButton(("20vw", "20vw"), game.Color.TEA_GREEN)
+
+secondButton = game.Button(("10vw", "5vh"), game.Color.RED, 1)
 secondButton.text("disable")
 
 image = game.Image("test.jpg")
+image.resize(50, 50)
+
+text = game.Text("hello world!", "comic sans", "10vw", game.Color.BLACK)
+# text.setHover(100)
+text.setBackground(game.Color.AQUAMARINE)
+text.setBorder(5, game.Color.BITTERSWEET, 5)
 
 while True:
     GAME.eventHandler()
@@ -23,15 +33,22 @@ while True:
     
     secondButton.addBorderOnHover("1vw", game.Color.BLUE)
     secondButton.place("60vw", "30vh")
+
+        
     
+    if button.isClicked():
+        print(False)
+        
+        
     if secondButton.isClicked():
         if button.getWidgetStatus:
             button.disable()
         else:
             button.enable()
-        
+    image.place(50, 50)
     
-    if button.isClicked():
-        print(True)
+    roundo.place(10, 10)
+    
+    text.placeInRect(game.Rect(("80vw", "20vh"), (200, 200)), game.xTextPositioning.right, game.yTextPositioning.bottom)
 
 
