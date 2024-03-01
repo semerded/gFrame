@@ -78,7 +78,7 @@ class AppConstructor:
                     vars.clickedKeys.append(event.key)
                 
                 elif event.type == pygame.KEYUP:
-                    index = vars.activeKeys.index(event.button)
+                    index = vars.activeKeys.index(event.key)
                     vars.releasedKeys.append(vars.activeKeys.pop(index))
                     
                 elif event.type == pygame.WINDOWRESIZED:
