@@ -3,6 +3,7 @@ from elements.enums import overFlow, xTextPositioning, yTextPositioning, hoverSp
 from elements.colors import Color
 from elements.fonts import Font
 from components.draw import Draw
+from components.display import Display
 from components.screenUnits import ScreenUnit
 from components.rect import Rect
 import vars
@@ -44,42 +45,7 @@ class Text:
             self.color = fontSize      
             self._renderText(self.text)
     
-    @staticmethod
-    def textOverflow(text: str, font: pygame.font, maxWidth: int | float, overFlowType: overFlow = overFlow.ellipsis) -> str:
-        if font.size(text)[0] < maxWidth:
-            return text
-        
-        if overFlowType == overFlow.show:
-            return text
-        elif overFlowType == overFlow.ellipsis:
-            ellipsisWidth = font.size("...")[0]
-            maxWidth -= ellipsisWidth - ellipsisWidth / 3
-            overFlowTrailing = "..."
-        else:
-            overFlowTrailing = ""
-            
-        newText = ""
-        textWidth = 0
-        for letter in text:
-            textWidth += font.size(letter)[0]
-            if textWidth < maxWidth - 10:
-                newText += letter
-            else:
-                return newText.strip() + overFlowTrailing
-            
-    @staticmethod
-    def simpleText(text: str, left: vars.validScreenUnit, top: vars.validScreenUnit, font: pygame.font.Font = Font.H3, color: vars.RGBvalue = Color.BLACK, bold: bool = False, italic: bool = False):
-        font.bold = bold
-        font.italic = italic
-
-        return vars.mainDisplay.blit(font.render(f"{text}", True, color), (left, top))
     
-    @staticmethod
-    def centerTextInRect(textSurface: pygame.Surface, rect: Rect):
-        xPos = rect.x + (rect.width / 2) - (textSurface.get_width() / 2)
-        yPos = rect.y + (rect.height / 2) - (textSurface.get_height() / 2)
-        return xPos, yPos
-            
     def setAntiAllias(self, active):
         self.antiAllias = active
         
@@ -174,3 +140,58 @@ class Text:
     @property
     def getRect(self):
         return self.textRect
+    
+    
+    # static functions
+    def textOverflow(text: str, font: pygame.font, maxWidth: int | float, overFlowType: overFlow = overFlow.ellipsis) -> str:
+        if font.size(text)[0] < maxWidth:
+            return text
+        
+        if overFlowType == overFlow.show:
+            return text
+        elif overFlowType == overFlow.ellipsis:
+            ellipsisWidth = font.size("...")[0]
+            maxWidth -= ellipsisWidth - ellipsisWidth / 3
+            overFlowTrailing = "..."
+        else:
+            overFlowTrailing = ""
+            
+        newText = ""
+        textWidth = 0
+        for letter in text:
+            textWidth += font.size(letter)[0]
+            if textWidth < maxWidth - 10:
+                newText += letter
+            else:
+                return newText.strip() + overFlowTrailing
+            
+    def simpleText(text: str, left: vars.validScreenUnit, top: vars.validScreenUnit, font: pygame.font.Font = Font.H3, color: vars.RGBvalue = Color.BLACK, bold: bool = False, italic: bool = False):
+        font.bold = bold
+        font.italic = italic
+
+        return vars.mainDisplay.blit(font.render(f"{text}", True, color), (left, top))
+    
+    def centerTextInRect(textSurface: pygame.Surface, rect: Rect):
+        xPos = rect.x + (rect.width / 2) - (textSurface.get_width() / 2)
+        yPos = rect.y + (rect.height / 2) - (textSurface.get_height() / 2)
+        return xPos, yPos
+    
+    def textColorFromBackground(textRect: pygame.Rect):
+        """
+        calculates the textcolor based on the center pixel of the rect\n
+        a dark color will return white and a light color will return black
+        """
+        pixelColor = Display.getPixelColorFromBackground(*textRect.center)
+        lightColor = False
+        for value in pixelColor:
+            if value >= 125:
+                lightColor = True
+        return Color.BLACK if lightColor else Color.WHITE
+
+    def textColorFromColor(color: vars.RGBvalue):
+        lightColor = False
+        for value in color:
+            if value >= 125:
+                lightColor = True
+        return Color.BLACK if lightColor else Color.WHITE
+            
