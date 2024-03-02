@@ -27,23 +27,20 @@ class Text:
         fontSize = int(ScreenUnit.checkIfValidScreenUnit(args[2]))
         if len(args) == 4:
             try:
-                self.font = pygame.font.SysFont(args[1], fontSize, bold, italic)
+                self.font = pygame.font.SysFont(args[1], fontSize)
             except:
                 self.font = pygame.font.Font(args[1], fontSize)
-            self.font.bold = bold
-            self.font.italic = italic 
-            
-            self.text = args[0]
+   
             self.color = args[3]      
-            self._renderText(self.text)        
         else:
             self.font: pygame.font.Font = args[1]
-            self.font.bold = bold
-            self.font.italic = italic 
+            self.color = args[2]      
             
-            self.text = args[0]
-            self.color = fontSize      
-            self._renderText(self.text)
+        self.text = args[0]
+        self._renderText(self.text)
+
+        self.font.bold = bold
+        self.font.italic = italic 
     
     
     def setAntiAllias(self, active):
