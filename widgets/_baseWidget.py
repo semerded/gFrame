@@ -17,6 +17,8 @@ class _BaseWidget:
         
         self.deActivated = False
         
+        self.isClickedInWidget = False
+        
         self.widgetBorderWidth = 0
         self.widgetBorderColor = Color.BLACK
         
@@ -37,12 +39,16 @@ class _BaseWidget:
     def isReleased(self, mouseButton: mouseButton = mouseButton.leftMouseButton, overWriteWidgetPressRegistration: bool = False) -> bool:
         if self.deActivated or not overWriteWidgetPressRegistration and vars.widgetAlreadyPressed:
             return False
-        return self._setWidgetAlreadyPressed(mouseButton, Interactions.isMouseReleasedInRect)
+        if self._setWidgetAlreadyPressed(mouseButton, Interactions.isMouseReleasedInRect) and self.isClickedInWidget:
+            self.isClickedInWidget = False
+            return True
+        return False
     
     def isPressing(self, mouseButton: mouseButton = mouseButton.leftMouseButton, overWriteWidgetPressRegistration: bool = False) -> bool:
         if self.deActivated or not overWriteWidgetPressRegistration and vars.widgetAlreadyPressed:
             return False
         return self._setWidgetAlreadyPressed(mouseButton, Interactions.isMousePressingInRect)
+        
     
     def _setWidgetAlreadyPressed(self, mouseButton: mouseButton, func):
         if (result := func(mouseButton, self.widgetRect)):
@@ -63,6 +69,10 @@ class _BaseWidget:
         if not self.deActivated:
             return Interactions.isMouseReleasedInRect(mouseButton, self.widgetRect)
         return False
+    
+    def _checkIfWidgetIsClicked(self):
+        if Interactions.isMouseClickedInRect(mouseButton.leftMouseButton, self.widgetRect):
+            self.isClickedInWidget = True
     
     def inRect(self, rect: Rect):
         return Interactions.rectInRect(rect, self.widgetRect)
@@ -104,7 +114,8 @@ class _BaseWidget:
         
         if self.widgetBorderWidth > 0:
             Draw.borderFromRect(self.widgetRect, self.widgetBorderWidth, self.widgetBorderColor, Draw.calculateOuterBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
-     
+        self._checkIfWidgetIsClicked()
+        
     def resize(self, width, height):
         width, height = ScreenUnit.convertMultipleUnits(width, height)
         self.widgetSize = [width, height]

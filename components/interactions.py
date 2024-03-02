@@ -58,7 +58,7 @@ class Interactions:
         return Interactions._negFlank(mouseButton)
     
     def isMouseReleasedInRect(mouseButton: mouseButton, rect: Rect) -> bool:
-        return Interactions.isMouseOver(rect) and Interactions.isMouseReleasedeased(mouseButton)
+        return Interactions.isMouseOver(rect) and Interactions.isMouseReleased(mouseButton)
     
     def isMouseReleasedInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
         return Interactions.isMouseInPolygon(polygon) and Interactions.isMouseReleased(mouseButton)
