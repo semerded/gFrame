@@ -3,6 +3,7 @@ import vars
 from components.draw import Draw
 from components.interactions import Interactions
 from components.screenUnits import ScreenUnit
+from components.rect import Rect
 from widgets._baseImage import _BaseImage
 from elements.fonts import Font
 from elements.colors import Color
@@ -23,34 +24,42 @@ class Button(_ColoredWidget):
         
     # static
     @staticmethod
-    def simpleButton(size,
-                     position, 
-                     backgroundColor: vars.RGBvalue = Color.LIGHT_GRAY, 
-                     text: str = "", 
-                     font: vars.pygameFont = Font.H3,
-                     textColor: vars.RGBvalue = Color.BLACK, 
-                     cornerRadius: int = -1, 
-                     borderWidth: int = 0,
-                     borderColor: vars.RGBvalue = Color.BLACK,
-                     ) -> bool:
+    def simpleButton(*args, backgroundColor= Color.LIGHT_GRAY, text = "", font = Font.H3,textColor = Color.BLACK, cornerRadius = -1, borderWidth = 0, borderColor = Color.BLACK) -> bool:
+        if len(args) == 4:
+            width, height, left, top = ScreenUnit.convertMultipleUnits(*args)
+        elif len(args) == 2:
+            width, height = ScreenUnit.convertMultipleUnits(*args[0])
+            left, top = ScreenUnit.convertMultipleUnits(*args[1])
+        else:
+            left, top, width, height = args[0].unpack()  
         
-        size = ScreenUnit.convertMultipleUnits(*size)
-        position = ScreenUnit.convertMultipleUnits(*position)
         borderWidth = ScreenUnit.checkIfValidScreenUnit(borderWidth)
         cornerRadius = ScreenUnit.checkIfValidScreenUnit(cornerRadius)
         
-        buttonRect = Draw.rectangle(position[0], position[1], size[0], size[1], backgroundColor, cornerRadius)
+        buttonRect = Draw.rectangle(left, top, width, height, backgroundColor, cornerRadius)
         if borderWidth > 0:
             buttonRect = Draw.border(borderWidth, buttonRect, borderColor, cornerRadius)
         if text != "":
             buttonText = font.render(text, True, textColor)
-            vars.mainDisplay.blit(buttonText, (position[0] + size[0] / 2 - buttonText.get_width() / 2, position[1] + size[1] / 2 - buttonText.get_height() / 2))
-        return Interactions.isMouseClickedInRect(buttonRect, mouseButton.leftMouseButton.value)
+            vars.mainDisplay.blit(buttonText, (left + width / 2 - buttonText.get_width() / 2, top + height / 2 - buttonText.get_height() / 2))
+        return Interactions.isMouseClickedInRect(mouseButton.leftMouseButton, buttonRect)
     
-    def text(self, text: str, textFont: pygame.font = Font.H4, color: vars.RGBvalue = Color.BLACK, overFlow = overFlow.ellipsis):
-        self.buttonText = Text.textOverflow(text, textFont, self.widgetSize[0], overFlow)
-        self.buttonTextFont = textFont
-        self.buttonTextColor = color
+    def text(self, *args, bold = False, italic = False, overFlow = overFlow.ellipsis):
+        if len(args) == 4:
+            fontSize = int(ScreenUnit.checkIfValidScreenUnit(args[2]))
+            try:
+                self.buttonTextFont = pygame.font.SysFont(args[1], fontSize)
+            except:
+                self.buttonTextFont = pygame.font.Font(args[1], fontSize) 
+            self.buttonTextColor = args[3]
+
+        else:
+            self.buttonTextFont: pygame.font.Font = args[1]
+            self.buttonTextColor = args[2]
+        self.buttonTextFont.bold = bold
+        self.buttonTextFont.italic = italic
+            
+        self.buttonText = Text.textOverflow(args[0], self.buttonTextFont, self.widgetSize[0], overFlow)
         
     def icon(self, iconPath: str):
         self.buttonIcon = _BaseImage(iconPath)
