@@ -1,7 +1,7 @@
 from importer import pygame
-version = '0.4.6'
+_GFRAME_VERSION = '0.4.8'
 def getVersion():
-    print(version)
+    print(_GFRAME_VERSION)
 
 pygame.init()
 pygame.mixer.init()

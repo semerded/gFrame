@@ -58,3 +58,9 @@ revamped image widget
 
 # 0.4.6
 revamped text widget
+
+# 0.4.7
+added a double click function to the button widget
+
+# 0.4.8
+added more interfaces

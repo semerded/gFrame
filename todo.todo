@@ -1,5 +1,8 @@
-update keyboard interaction en voeg het toe aan interaction class
+finish basepopup
 
-make a logger
+add different popup premakes
 
-update mouse click system
+- continue popup
+- input popup
+- text input popup
+- warning popup
