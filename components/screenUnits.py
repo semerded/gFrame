@@ -1,7 +1,5 @@
 import vars
 from elements.enums import aspectRatios
-from components.rect import Rect
-
 
 class ScreenUnit:
     def precent(parentSize, percent):
