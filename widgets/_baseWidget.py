@@ -9,20 +9,21 @@ from elements.enums import mouseButton
 from elements.colors import Color
 
 class _BaseWidget:
-    def __init__(self, size: tuple[vars.validScreenUnit, vars.validScreenUnit], borderRadius: int = -1) -> None:
-        self.widgetSize = ScreenUnit.convertMultipleUnits(*size) # size
+    deActivated = False
+    isClickedInWidget = False
+    widgetBorderWidth = 0
+    widgetBorderColor = Color.BLACK
+    
+    def __init__(self, *args, borderRadius: int = -1) -> None:
+        if len(args) == 1:
+            args = args[0]
+            
+        self.widgetSize: list[int | float] = ScreenUnit.convertMultipleUnits(*args) # size
         self.widgetRect: Rect = Rect(0, 0, 0, 0)
         self.borderRect: Rect = Rect(0, 0, 0, 0)
         self.widgetBorderRadius = ScreenUnit.checkIfValidScreenUnit(borderRadius)
         
-        self.deActivated = False
-        
-        self.isClickedInWidget = False
-        
-        self.widgetBorderWidth = 0
-        self.widgetBorderColor = Color.BLACK
-        
-    def border(self, borderWidth: int, borderColor: vars.RGBvalue):
+    def setBorder(self, borderWidth, borderColor: vars.RGBvalue):
         self.widgetBorderWidth = int(ScreenUnit.checkIfValidScreenUnit(borderWidth))
         self.widgetBorderColor = borderColor    
         
@@ -31,21 +32,21 @@ class _BaseWidget:
             return Interactions.isMouseOver(self.widgetRect)
         return False
     
-    def isClicked(self, mouseButton: mouseButton = mouseButton.leftMouseButton, overWriteWidgetPressRegistration: bool = False) -> bool:
-        if self.deActivated or not overWriteWidgetPressRegistration and vars.widgetAlreadyPressed:
+    def isClicked(self, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
+        if self.deActivated or vars.widgetAlreadyPressed:
             return False
         return self._setWidgetAlreadyPressed(mouseButton, Interactions.isMouseClickedInRect)
     
-    def isReleased(self, mouseButton: mouseButton = mouseButton.leftMouseButton, overWriteWidgetPressRegistration: bool = False) -> bool:
-        if self.deActivated or not overWriteWidgetPressRegistration and vars.widgetAlreadyPressed:
+    def isReleased(self, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
+        if self.deActivated or vars.widgetAlreadyPressed:
             return False
         if self._setWidgetAlreadyPressed(mouseButton, Interactions.isMouseReleasedInRect) and self.isClickedInWidget:
             self.isClickedInWidget = False
             return True
         return False
     
-    def isPressing(self, mouseButton: mouseButton = mouseButton.leftMouseButton, overWriteWidgetPressRegistration: bool = False) -> bool:
-        if self.deActivated or not overWriteWidgetPressRegistration and vars.widgetAlreadyPressed:
+    def isPressing(self, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
+        if self.deActivated or vars.widgetAlreadyPressed:
             return False
         return self._setWidgetAlreadyPressed(mouseButton, Interactions.isMousePressingInRect)
         
@@ -89,8 +90,9 @@ class _BaseWidget:
     def _addBorderOnEvent(self, event, borderWidth: int, borderColor: vars.RGBvalue):
         if not self.deActivated:
             if event():
-                Draw.borderFromRect(self.borderRect, ScreenUnit.checkIfValidScreenUnit(borderWidth), borderColor, Draw.calculateOuterBorderRadius(self.widgetBorderRadius, borderWidth))
-      
+                borderWidth = int(ScreenUnit.checkIfValidScreenUnit(borderWidth))
+                Draw.borderFromRect(self.borderRect, borderWidth, borderColor, Draw.calculateOuterBorderRadius(self.widgetBorderRadius, borderWidth))
+
     def changeBorderOnHover(self, borderColor: vars.RGBvalue):
         self._changeBorderOnEvent(self.isMouseOver, borderColor)
     
@@ -119,6 +121,7 @@ class _BaseWidget:
     def resize(self, width, height):
         width, height = ScreenUnit.convertMultipleUnits(width, height)
         self.widgetSize = [width, height]
+        return self.widgetSize
         
     def enable(self):
         self.deActivated = False
@@ -137,4 +140,3 @@ class _BaseWidget:
     @property
     def getWidgetStatus(self):
         return not self.deActivated
-           

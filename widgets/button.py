@@ -15,8 +15,8 @@ from time import time
 class Button(_ColoredWidget):
     pressingTime = 0
     
-    def __init__(self, size: tuple[vars.validScreenUnit], color: vars.RGBvalue, borderRadius: int = -1) -> None:
-        super().__init__(size, color, borderRadius)
+    def __init__(self, *args, borderRadius: int = -1) -> None:
+        super().__init__(*args, borderRadius=borderRadius)
         self.buttonText = None
         self.buttonIcon = None
         self.textSurface = pygame.Surface((0, 0))
@@ -58,7 +58,6 @@ class Button(_ColoredWidget):
             self.buttonTextColor = args[2]
         self.buttonTextFont.bold = bold
         self.buttonTextFont.italic = italic
-            
         self.buttonText = Text.textOverflow(args[0], self.buttonTextFont, self.widgetSize[0], overFlow)
         
     def icon(self, iconPath: str):

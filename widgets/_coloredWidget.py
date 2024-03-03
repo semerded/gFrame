@@ -5,11 +5,15 @@ from elements.colors import Color
 import vars
 
 class _ColoredWidget(_BaseWidget):
-    def __init__(self, size: tuple[int | float, int | float], color: vars.RGBvalue, borderRadius) -> None:
-        super().__init__(size, borderRadius)
-        
-        self.widgetColor = color
-        self.defaultColor = color
+    def __init__(self, *args, borderRadius: int = -1) -> None:
+        if len(args) == 3:
+            super().__init__(args[0], args[1], borderRadius=borderRadius)
+            self.widgetColor = args[2]
+            self.defaultColor = args[2]
+        else:
+            super().__init__(args[0], borderRadius=borderRadius)
+            self.widgetColor = args[1]
+            self.defaultColor = args[1]
         
         self.disableColor = Color.GREY
 
