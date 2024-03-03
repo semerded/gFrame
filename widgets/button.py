@@ -14,6 +14,8 @@ from time import time
 
 class Button(_ColoredWidget):
     pressingTime = 0
+    doubleClickTimeDifference = 0
+    DOUBLE_CLICK_MAX_INTERVAL = 0.5 # seconds (default on windows)
     
     def __init__(self, *args, borderRadius: int = -1) -> None:
         super().__init__(*args, borderRadius=borderRadius)
@@ -81,8 +83,12 @@ class Button(_ColoredWidget):
             return True
         return False
     
-    def isDoubleTapped(self, mousebutton: mouseButton.leftMouseButton):
-        pass
+    def isDoubleClicked(self, mousebutton: mouseButton = mouseButton.leftMouseButton):
+        if self.isSuperClicked(mousebutton):
+            if time() - self.doubleClickTimeDifference < self.DOUBLE_CLICK_MAX_INTERVAL:
+                return True
+            self.doubleClickTimeDifference = time()
+        return False 
 
     def place(self, left, top, opacity: int = 255):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
@@ -93,8 +99,11 @@ class Button(_ColoredWidget):
         if self.buttonIcon != None:
             self.buttonIcon._baseImagePlace(left, top)
         self._baseWidgetPlace(left, top)
-     
+
     @property       
     def getPressingTime(self):
         self.pressingTime
+        
+    def setDoubleClickMaxInterval(self, maxInterval_inMilliseconds: int):
+        self.DOUBLE_CLICK_MAX_INTERVAL = maxInterval_inMilliseconds / 1000
     
