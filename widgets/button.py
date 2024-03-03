@@ -77,9 +77,12 @@ class Button(_ColoredWidget):
         if self.isSuperClicked():
             self.pressingTime = time()
         
-        if self.isSuperPressing() and (time() - self.pressingTime > milliseconds / 1000):
+        if self.isSuperPressing() and self.isClickedInWidget and (time() - self.pressingTime > milliseconds / 1000):
             return True
         return False
+    
+    def isDoubleTapped(self, mousebutton: mouseButton.leftMouseButton):
+        pass
 
     def place(self, left, top, opacity: int = 255):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
