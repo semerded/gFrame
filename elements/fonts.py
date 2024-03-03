@@ -1,4 +1,5 @@
 import pygame
+import vars
 pygame.font.init()
 
 class Font:
@@ -20,7 +21,7 @@ class Font:
     FONT100 = pygame.font.SysFont(pygame.font.get_default_font(), 100)
     FONT150 = pygame.font.SysFont(pygame.font.get_default_font(), 150)
 
-    def customFont(size, font=None):
+    def customFont(size: vars.validScreenUnit, font: pygame.font.Font = None):
         if font == None:
             return pygame.font.SysFont(pygame.font.get_default_font(), size)
-        return pygame.font.SysFont(font, size)
+        return pygame.font.Font(font, size)
