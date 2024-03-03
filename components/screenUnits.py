@@ -1,5 +1,6 @@
 import vars
 from elements.enums import aspectRatios
+from components.rect import Rect
 
 
 class ScreenUnit:
@@ -65,12 +66,18 @@ class ScreenUnit:
             results.append(ScreenUnit.checkIfValidScreenUnit(unit))
         return results
     
-    def centerOfScreen(self):
+    def centerOfScreen():
         return vars.appWidth / 2, vars.appHeight / 2
+    
+    def centerRectInScreen(*args): # make pyi file
+        if len(args) == 2:
+            width, heigth = ScreenUnit.convertMultipleUnits(args[0], args[1])
+        else:
+            width, heigth = args[0].width, args[0].height
             
+        screenCenterW, screenCenterH = ScreenUnit.centerOfScreen()
+        return screenCenterW - (width / 2), screenCenterH - (heigth / 2) 
 
-
-            
 class _StrScreenUnitConverter:
     def getUnitType(screenUnit):
         splitUnit = _StrScreenUnitConverter.splitUnit(screenUnit)
