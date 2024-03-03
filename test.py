@@ -3,17 +3,17 @@ import __init__ as game
 GAME = game.AppConstructor("50dw", "50dh")
 
 # slider = game.Slider((50, 30), 50, 300, game.Color.RED, borderRadius=50)
-button = game.Button(("20vw", "30vh"), game.Color.GREEN, 50)
-button.border("1vw", game.Color.AQUAMARINE)
-button.text("hello")
+button = game.Button(("20vw", "30vh"), game.Color.GREEN, borderRadius=50)
+button.setBorder("1vw", game.Color.AQUAMARINE)
+button.text("hello", game.Font.H3, game.Color.BLACK)
 # button.icon("test.jpg")
 
 
 
 roundo = game.RoundButton(("20vw", "20vw"), game.Color.TEA_GREEN)
 
-secondButton = game.Button(("10vw", "5vh"), game.Color.RED, 1)
-secondButton.text("disable")
+secondButton = game.Button(("10vw", "5vh"), game.Color.RED, borderRadius=1)
+secondButton.text("disable", "ariel", "2vw", game.Color.BLACK, italic=True)
 
 image = game.Image("test.jpg")
 image.resize(50, 50)
@@ -34,14 +34,15 @@ while True:
     secondButton.addBorderOnHover("1vw", game.Color.BLUE)
     secondButton.place("60vw", "30vh")
 
-        
     
-    if button.isClicked():
-        print(False)
+    # if button.isReleased():
+    #     print("clicked the button")
         
-    if button.isHeldFor(2000):
-        print("held done")
+    # if button.isHeldFor(2000):
+    #     print("held done")
         
+    if button.isDoubleClicked():
+        print("double click")
         
     if secondButton.isClicked():
         if button.getWidgetStatus:
@@ -50,8 +51,9 @@ while True:
             button.enable()
     image.place(50, 50)
     
-    roundo.place(10, 10)
+    # roundo.place(10, 10)
     
     text.placeInRect(game.Rect(("80vw", "20vh"), (200, 200)), game.xTextPositioning.right, game.yTextPositioning.bottom)
+    
 
 

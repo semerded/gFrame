@@ -17,7 +17,7 @@ class Button(_ColoredWidget):
     doubleClickTimeDifference = 0
     DOUBLE_CLICK_MAX_INTERVAL = 0.5 # seconds (default on windows)
     
-    def __init__(self, *args, borderRadius: int = -1) -> None:
+    def __init__(self, *args, borderRadius: vars.validScreenUnit = -1) -> None:
         super().__init__(*args, borderRadius=borderRadius)
         self.buttonText = None
         self.buttonIcon = None
@@ -88,6 +88,8 @@ class Button(_ColoredWidget):
             if time() - self.doubleClickTimeDifference < self.DOUBLE_CLICK_MAX_INTERVAL:
                 return True
             self.doubleClickTimeDifference = time()
+        if Interactions.isMouseClicked and not Interactions.isMouseOver(self.getRect):
+            self.doubleClickTimeDifference = 0
         return False 
 
     def place(self, left, top, opacity: int = 255):

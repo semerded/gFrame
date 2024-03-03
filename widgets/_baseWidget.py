@@ -12,7 +12,7 @@ class _BaseWidget:
     widgetBorderWidth = 0
     widgetBorderColor = Color.BLACK
     
-    def __init__(self, *args, borderRadius: int = -1) -> None:
+    def __init__(self, *args, borderRadius: vars.validScreenUnit = -1) -> None:
         if len(args) == 1:
             args = args[0]
             
