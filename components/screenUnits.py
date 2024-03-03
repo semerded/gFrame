@@ -64,6 +64,9 @@ class ScreenUnit:
         for unit in screenUnit:
             results.append(ScreenUnit.checkIfValidScreenUnit(unit))
         return results
+    
+    def centerOfScreen(self):
+        return vars.appWidth / 2, vars.appHeight / 2
             
 
 
