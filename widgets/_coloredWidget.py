@@ -1,4 +1,3 @@
-from vars import RGBvalue
 from widgets._baseWidget import _BaseWidget
 from components.draw import Draw
 from elements.colors import Color

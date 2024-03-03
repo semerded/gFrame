@@ -3,7 +3,6 @@ from components.screenUnits import ScreenUnit
 from components.display import Display
 from components.updating import Updating
 from components.aspectRatio import _AspectRatio
-from elements.enums import axis
 from typing_extensions import TypeAlias, Literal
 import vars, sys, os
 

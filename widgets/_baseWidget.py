@@ -1,5 +1,3 @@
-from importer import pygame
-
 import vars
 from components.interactions import Interactions
 from components.screenUnits import ScreenUnit
