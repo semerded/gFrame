@@ -1,4 +1,5 @@
 from importer import pygame
+from components.rect import Rect
 from widgets._baseImage import _BaseImage
 from widgets._baseWidget import _BaseWidget
 
@@ -17,7 +18,7 @@ class Image(_BaseImage, _BaseWidget):
         
     @property
     def getImageRect(self):
-        return Rect(*self.imagePosition, *self.getImageSize)
+        return Rect(self.imagePosition, self.getImageSize)
     
     
     
