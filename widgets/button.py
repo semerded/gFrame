@@ -88,7 +88,7 @@ class Button(_ColoredWidget):
             if time() - self.doubleClickTimeDifference < self.DOUBLE_CLICK_MAX_INTERVAL:
                 return True
             self.doubleClickTimeDifference = time()
-        if Interactions.isMouseClicked and not Interactions.isMouseOver(self.getRect):
+        if Interactions.isMouseNotClickedInRect(mousebutton, self.getRect):
             self.doubleClickTimeDifference = 0
         return False 
 
