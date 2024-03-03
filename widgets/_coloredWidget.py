@@ -31,7 +31,7 @@ class _ColoredWidget(_BaseWidget):
         self._changeColorOnEvent(self.isPressing(), clickColor)
             
     def _changeColorOnEvent(self, event, clickColor: vars.RGBvalue):
-        if not self.deActivated:
+        if self.getWidgetStatus:
             if event():
                 self.widgetColor = clickColor
             else:
