@@ -79,6 +79,7 @@ class Button(_ColoredWidget):
             self.pressingTime = time()
         
         if self.isSuperPressing() and self.isClickedInWidget and (time() - self.pressingTime > milliseconds / 1000):
+            self.pressingTime = 0
             return True
         return False
     
