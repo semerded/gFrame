@@ -79,16 +79,16 @@ class Button(_ColoredWidget):
             self.pressingTime = time()
         
         if self.isSuperPressing() and self.isClickedInWidget and (time() - self.pressingTime > milliseconds / 1000):
-            self.pressingTime = 0
             return True
         return False
     
     def isDoubleClicked(self, mousebutton: mouseButton = mouseButton.leftMouseButton):
         if self.isSuperClicked(mousebutton):
             if time() - self.doubleClickTimeDifference < self.DOUBLE_CLICK_MAX_INTERVAL:
+                self.doubleClickTimeDifference = 0
                 return True
             self.doubleClickTimeDifference = time()
-        if Interactions.isMouseNotClickedInRect(mousebutton, self.getRect):
+        if Interactions.isMouseClickedNotInRect(mousebutton, self.getRect):
             self.doubleClickTimeDifference = 0
         return False 
 
