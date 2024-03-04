@@ -4,7 +4,7 @@ def getVersion():
     print(_GFRAME_VERSION)
 
 
-from . import vars
+# from . import vars
 
 from .elements.colors import Color
 from .elements.enums import aspectRatios, axis, hoverSpeed, interactionType, mouseButton, overFlow, scrollSpeed, xTextPositioning, yTextPositioning

@@ -9,16 +9,16 @@ class _AspectRatio:
         self.aspectRatio: float
         self.aspectRatioAxis: axis
         
-    def setAspectRatio(self, aspectRatio: str | float | aspectRatios, width: int = None, height: int = None):
+    def setAspectRatio(self, aspectRatio: str | float | aspectRatios, width: vars.validScreenUnit = None, height: vars.validScreenUnit = None):
         if isinstance(aspectRatio, aspectRatios):
             aspectRatio = aspectRatio.value
         width, height = ScreenUnit.convertMultipleUnits(width, height)
         
         self.aspectRatioActive = True
         self._getAspectRatio(aspectRatio)
-        self._getAxis(width, height)
-        self._calculateAspectRatioDimensions(width, height)
-        Display.set(width, height, vars.appFlags)
+        width = self._getAxis(width, height)
+        width, height = self._calculateAspectRatioDimensions(width, height)
+        Display.set(width, height, *vars.appFlags)
     
     def disableAspectRatio(self):
         self.aspectRatioActive = False
@@ -31,12 +31,12 @@ class _AspectRatio:
             width = 0
             height = vars.appHeight
         width, height, self._calculateAspectRatioDimensions(width, height)
-        Display.set(width, height, vars.appFlags)
+        Display.set(width, height, *vars.appFlags)
 
 
     # private    
     def _getAspectRatio(self, aspectRatio):
-        if isinstance(str):
+        if isinstance(aspectRatio, str):
             self.aspectRatio = ScreenUnit.aspectRatioFromString(aspectRatio)
         else:
             self.aspectRatio = aspectRatio
@@ -49,6 +49,7 @@ class _AspectRatio:
             self.aspectRatioAxis = axis.x
         else:
             self.aspectRatioAxis = axis.y
+        return width
     
     def _calculateAspectRatioDimensions(self, width, height):
         if self.aspectRatioAxis == axis.x:

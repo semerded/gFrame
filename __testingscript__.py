@@ -1,6 +1,7 @@
 import gFrame.__init__ as game
 
 GAME = game.AppConstructor("50dw", "50dh")
+game.Display.setAspectRatio(game.aspectRatios.ratio16to9)
 
 # slider = game.Slider((50, 30), 50, 300, game.Color.RED, borderRadius=50)
 button = game.Button(("20vw", "30vh"), game.Color.GREEN, borderRadius=50)
