@@ -64,3 +64,6 @@ added a double click function to the button widget
 
 # 0.4.8
 added more interfaces
+
+# 1.0.0 
+first release
