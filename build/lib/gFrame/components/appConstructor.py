@@ -109,6 +109,19 @@ class AppConstructor:
         
     def isFirstFrame(self):
         return self.pageCounter < 2
+    
+    def drawElements(self):
+        """
+        place everything that has to be drawn in an if-statement\n
+        >>> if app.drawElements():
+        ...     button.place(0, 0)
+        ...     image.place("50vw", "20vh")
+        ...     *other placers*
+        """
+        return not self.manualUpdating or self.updatePending or self.isFirstFrame() or vars.windowResized
+    
+    def requestUpdate(self):
+        self.updatePending = True
             
     def setModifiableFunction(self, type: modifiableFunctions, function): 
         self.modifiableFunctions[type] = function

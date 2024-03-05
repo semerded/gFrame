@@ -60,7 +60,7 @@ class Button(_ColoredWidget):
         self._resizeIcon()
                 
     def _resizeIcon(self):
-        self.buttonIcon.resizeImage(self.widgetSize[0], self.widgetSize[1])
+        self.buttonIcon.resize(self.widgetSize[0], self.widgetSize[1])
     
     def _placeText(self):
         if self.buttonText != None:
