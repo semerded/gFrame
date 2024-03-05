@@ -12,11 +12,8 @@ class _BaseWidget:
     widgetBorderWidth = 0
     widgetBorderColor = Color.BLACK
     
-    def __init__(self, *args, borderRadius: vars.validScreenUnit = -1) -> None:
-        if len(args) == 1:
-            args = args[0]
-            
-        self.widgetSize: list[int | float] = ScreenUnit.convertMultipleUnits(*args) # size
+    def __init__(self, size, borderRadius: vars.validScreenUnit = -1) -> None:
+        self.widgetSize: list[int | float] = ScreenUnit.convertMultipleUnits(*size) 
         self.widgetRect: Rect = Rect(0, 0, 0, 0)
         self.borderRect: Rect = Rect(0, 0, 0, 0)
         self.widgetBorderRadius = ScreenUnit.checkIfValidScreenUnit(borderRadius)
