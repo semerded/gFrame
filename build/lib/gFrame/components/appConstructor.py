@@ -108,7 +108,7 @@ class AppConstructor:
         self.pageCounter += 1
         
     def isFirstFrame(self):
-        return self.pageCounter < 2
+        return self.pageCounter < 5
     
     def drawElements(self):
         """
