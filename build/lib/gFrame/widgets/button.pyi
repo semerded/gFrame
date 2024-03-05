@@ -6,18 +6,8 @@ from ..widgets._coloredWidget import _ColoredWidget
 from typing import overload
 
 class Button(_ColoredWidget):
-    @overload
     def __init__(self, size: tuple[vars.validScreenUnit], color: vars.RGBvalue, borderRadius: vars.validScreenUnit = -1) -> None: ...
-    @overload
-    def __init__(self, width: vars.validScreenUnit, height: vars.validScreenUnit, color: vars.RGBvalue, borderRadius: vars.validScreenUnit = -1) -> None: ...
     
-    @overload
-    @staticmethod
-    def simpleButton(size: tuple[vars.validScreenUnit], position: vars.coordinate, backgroundColor: vars.RGBvalue = Color.LIGHT_GRAY, borderColor: vars.RGBvalue = Color.BLACK, borderWidth: vars.validScreenUnit = 5) -> bool: ...
-    @overload
-    @staticmethod
-    def simpleButton(width: vars.validScreenUnit, height: vars.validScreenUnit, left: vars.validScreenUnit, top: vars.validScreenUnit, backgroundColor: vars.RGBvalue = Color.LIGHT_GRAY, borderColor: vars.RGBvalue = Color.BLACK, borderWidth: vars.validScreenUnit = 5) -> bool: ...
-    @overload
     @staticmethod
     def simpleButton(rect: Rect, backgroundColor: vars.RGBvalue = Color.LIGHT_GRAY, borderColor: vars.RGBvalue = Color.BLACK, borderWidth: vars.validScreenUnit = 5) -> bool: ...
     

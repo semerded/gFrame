@@ -16,8 +16,8 @@ class Button(_ColoredWidget):
     doubleClickTimeDifference = 0
     DOUBLE_CLICK_MAX_INTERVAL = 0.5 # seconds (default on windows)
     
-    def __init__(self, *args, borderRadius: vars.validScreenUnit = -1) -> None:
-        super().__init__(*args, borderRadius=borderRadius)
+    def __init__(self, size, color, borderRadius: vars.validScreenUnit = -1) -> None:
+        super().__init__(size, color, borderRadius=borderRadius)
         self.buttonText = None
         self.buttonIcon = None
         self.textSurface = pygame.Surface((0, 0))
@@ -25,14 +25,8 @@ class Button(_ColoredWidget):
         
     # static
     @staticmethod
-    def simpleButton(*args, backgroundColor= Color.LIGHT_GRAY, text = "", font = Font.H3,textColor = Color.BLACK, cornerRadius = -1, borderWidth = 0, borderColor = Color.BLACK) -> bool:
-        if len(args) == 4:
-            width, height, left, top = ScreenUnit.convertMultipleUnits(*args)
-        elif len(args) == 2:
-            width, height = ScreenUnit.convertMultipleUnits(*args[0])
-            left, top = ScreenUnit.convertMultipleUnits(*args[1])
-        else:
-            left, top, width, height = args[0].unpack()  
+    def simpleButton(rect: Rect, backgroundColor= Color.LIGHT_GRAY, text = "", font = Font.H3,textColor = Color.BLACK, cornerRadius = -1, borderWidth = 0, borderColor = Color.BLACK) -> bool:
+        left, top, width, height = rect.unpack()  
         
         borderWidth = ScreenUnit.checkIfValidScreenUnit(borderWidth)
         cornerRadius = ScreenUnit.checkIfValidScreenUnit(cornerRadius)
