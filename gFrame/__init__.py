@@ -1,10 +1,7 @@
 from .baseImporter import pygame
-_GFRAME_VERSION = '1.0.0'
-def getVersion():
-    print(_GFRAME_VERSION)
-
 
 # from . import vars
+from .vars import RGBvalue, validScreenUnit, getVersion
 
 from .elements.colors import Color
 from .elements.enums import aspectRatios, axis, hoverSpeed, interactionType, mouseButton, overFlow, scrollSpeed, xTextPositioning, yTextPositioning
