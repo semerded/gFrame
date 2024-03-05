@@ -1,8 +1,13 @@
 from typing_extensions import TypeAlias, Literal
 from .baseImporter import pygame
 
+_GFRAME_VERSION = '1.0.0'
+def getVersion():
+    print(_GFRAME_VERSION)
+
 pygame.init()
 pygame.mixer.init()
+pygame.display.set_caption("gFrame (powered by pygame)")
 
 # type declaration
 RGBvalue: TypeAlias = tuple[int, int, int]
