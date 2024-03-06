@@ -10,7 +10,7 @@ class Debugger:
         
 class RunTimer:
     def setTimePoint():
-        vars.debugTimePoints.append(time.process_time())
+        vars.debugTimePoints.append(time.perf_counter())
         
     def getResults():
         for index, _time in enumerate(vars.debugTimePoints):

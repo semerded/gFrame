@@ -12,6 +12,7 @@ class Text:
     borderColor: vars.RGBvalue = None
     borderWidth: vars.validScreenUnit = None
     borderRadius: int = -1
+    backgroundColor = None
     
     hoverDistance: vars.validScreenUnit = 0
     _hoverSpeed: int = 0
@@ -23,13 +24,13 @@ class Text:
     textRect: Rect = Rect(0, 0, 0, 0)
     
     def __init__(self, *args, bold = False, italic = False):
-        fontSize = int(ScreenUnit.checkIfValidScreenUnit(args[2]))
         if len(args) == 4:
+            fontSize = int(ScreenUnit.checkIfValidScreenUnit(args[2]))
             try:
                 self.font = pygame.font.SysFont(args[1], fontSize)
             except:
                 self.font = pygame.font.Font(args[1], fontSize)
-   
+
             self.color = args[3]      
         else:
             self.font: pygame.font.Font = args[1]

@@ -41,9 +41,10 @@ class Draw:
         return Draw.rectangle(left, top, 1, 1, color)
     
     @staticmethod
-    def polygon(points: tuple[vars.coordinate], color: vars.RGBvalue, width: vars.validScreenUnit = 0):
-        for index, point in enumerate(points):
-            points[index] = ScreenUnit.convertMultipleUnits(point)
+    def polygon(color: vars.RGBvalue, points: list[vars.coordinate], width: vars.validScreenUnit = 0):
+        validPoints = []
+        for point in points:
+            validPoints = ScreenUnit.convertMultipleUnits(*point)
         width = ScreenUnit.checkIfValidScreenUnit(width)
         return pygame.draw.polygon(vars.mainDisplay, color, points, width)
     

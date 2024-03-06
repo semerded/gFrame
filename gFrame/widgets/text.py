@@ -12,6 +12,7 @@ class Text:
     borderColor: vars.RGBvalue = None
     borderWidth: vars.validScreenUnit = None
     borderRadius: int = -1
+    backgroundColor = None
     
     hoverDistance: vars.validScreenUnit = 0
     _hoverSpeed: int = 0
@@ -23,13 +24,13 @@ class Text:
     textRect: Rect = Rect(0, 0, 0, 0)
     
     def __init__(self, *args, bold = False, italic = False):
-        fontSize = int(ScreenUnit.checkIfValidScreenUnit(args[2]))
         if len(args) == 4:
+            fontSize = int(ScreenUnit.checkIfValidScreenUnit(args[2]))
             try:
                 self.font = pygame.font.SysFont(args[1], fontSize)
             except:
                 self.font = pygame.font.Font(args[1], fontSize)
-   
+
             self.color = args[3]      
         else:
             self.font: pygame.font.Font = args[1]
@@ -106,10 +107,18 @@ class Text:
         self._drawBase()
         vars.mainDisplay.blit(self.textSurface, (left + 3, top + 3))
         
+    def placeCenterX(self, top: vars.validScreenUnit):
+        pass
+    
+    def placeCenterY(self, left: vars.validScreenUnit):
+        pass
+    
+    def placeCenterScreen(self):
+        pass
     
     def placeInRect(self, *args):
         if len(args) == 4:
-            self.text = args[3]
+            self.setText(args[3])
         # top = self._textHover(top) # TODO add hover
         _rect: Rect = args[0]
         self.textRect = Rect(_rect.x, _rect.y, _rect.width + 6, _rect.height + 6)
