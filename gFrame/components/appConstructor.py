@@ -84,10 +84,12 @@ class AppConstructor:
                     
                 elif event.type == pygame.WINDOWRESIZED:
                     vars.windowResized = True
+                    Display.set(*Display.getWindowSize(), *vars.appFlags)
                     if vars.minimumScreenWidth != None or vars.minimumScreenHeight != None:
                         Display.checkForMinimumScreenSizeBreaches()
                     if vars.aspectRatioObject.aspectRatioActive:
                         vars.aspectRatioObject.updateAspectRatio()
+                    self.requestUpdate()
                         
                 elif event.type == pygame.QUIT:
                     if self.modifiableFunctions["quit"] == None:

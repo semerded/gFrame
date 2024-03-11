@@ -53,7 +53,9 @@ class Display:
     def disableAspectRatio():
         vars.aspectRatioObject.disableAspectRatio()
         
-    @property
-    def getAppScreenDimensions():
+    def getWindowSize():
         displayInfo = pygame.display.Info()
         return displayInfo.current_w, displayInfo.current_h
+    
+    def getDisplaySize():
+        return vars.displayWidth, vars.displayHeight

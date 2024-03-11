@@ -1,6 +1,5 @@
 from .baseImporter import pygame
 
-# from . import vars
 from .vars import RGBvalue, validScreenUnit, getVersion
 
 from .elements.colors import Color
