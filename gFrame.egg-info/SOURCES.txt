@@ -23,6 +23,7 @@ gFrame/components/rect.py
 gFrame/components/rect.pyi
 gFrame/components/screenUnits.py
 gFrame/components/scroll.py
+gFrame/components/shareKey.py
 gFrame/components/updating.py
 gFrame/elements/__init__.py
 gFrame/elements/colors.py

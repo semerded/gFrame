@@ -3,6 +3,7 @@ from ..components.interactions import Interactions
 from ..components.screenUnits import ScreenUnit
 from ..components.draw import Draw
 from ..components.rect import Rect
+from ..components.updating import Updating
 from ..elements.enums import mouseButton
 from ..elements.colors import Color
 
@@ -49,26 +50,27 @@ class _BaseWidget:
     def _setWidgetAlreadyPressed(self, mouseButton: mouseButton, func):
         if (result := func(mouseButton, self.widgetRect)):
             vars.widgetAlreadyPressed = True
+            Updating.requestRectUpdate(self.getBorderRect)
+
         return result
     
     def isSuperClicked(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
+            Updating.requestRectUpdate(self.getBorderRect)
             return Interactions.isMouseClickedInRect(mouseButton, self.widgetRect)
         return False
     
     def isSuperPressing(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
+            Updating.requestRectUpdate(self.getBorderRect)
             return Interactions.isMousePressingInRect(mouseButton, self.widgetRect)
         return False
     
     def isSuperReleased(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
+            Updating.requestRectUpdate(self.getBorderRect)
             return Interactions.isMouseReleasedInRect(mouseButton, self.widgetRect)
         return False
-    
-    def _checkIfWidgetIsClicked(self):
-        if Interactions.isMouseClickedInRect(mouseButton.leftMouseButton, self.widgetRect):
-            self.isClickedInWidget = True
     
     def inRect(self, rect: Rect):
         return Interactions.rectInRect(rect, self.widgetRect)
@@ -99,6 +101,7 @@ class _BaseWidget:
     
     def _changeBorderOnEvent(self, event, borderColor: vars.RGBvalue):
         if not self.deActivated:
+            Updating.requestRectUpdate(self.getBorderRect)
             if event():
                 self.border(self.widgetBorderWidth, borderColor)
             else:
@@ -113,15 +116,22 @@ class _BaseWidget:
             Draw.borderFromRect(self.widgetRect, self.widgetBorderWidth, self.widgetBorderColor, Draw.calculateOuterBorderRadius(self.widgetBorderRadius, self.widgetBorderWidth))
         self._checkIfWidgetIsClicked()
         
+    def _checkIfWidgetIsClicked(self):
+        if Interactions.isMouseClickedInRect(mouseButton.leftMouseButton, self.widgetRect):
+            self.isClickedInWidget = True
+        
     def resize(self, width, height):
         width, height = ScreenUnit.convertMultipleUnits(width, height)
         self.widgetSize = [width, height]
+        Updating.requestRectUpdate(self.getBorderRect)
         return self.widgetSize
         
     def enable(self):
+        Updating.requestRectUpdate(self.getBorderRect)
         self.deActivated = False
         
     def disable(self):
+        Updating.requestRectUpdate(self.getBorderRect)
         self.deActivated = True
         
     @property
