@@ -2,8 +2,10 @@ from typing_extensions import TypeAlias, Literal
 from .baseImporter import pygame
 
 _GFRAME_VERSION = '1.0.0'
-def getVersion():
+gFrameVersion: TypeAlias = str
+def getVersion() -> gFrameVersion:
     print(_GFRAME_VERSION)
+    return _GFRAME_VERSION
 
 pygame.init()
 pygame.mixer.init()
@@ -34,8 +36,10 @@ minimumScreenWidth: int = None
 minimumScreenHeight: int = None
 appFlags: tuple
 mainDisplay: pygame.Surface = None
-screenUpdate = False
+
+updatePending = False
 windowResized = False
+updateableRectsPending = []
 
 aspectRatioObject = None
 

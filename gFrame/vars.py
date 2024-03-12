@@ -25,6 +25,7 @@ validScreenUnit: TypeAlias = int | float | Literal[
 pygameFont: TypeAlias = pygame.font.Font
 coordinate: TypeAlias = list[int] | tuple[int]
 path: TypeAlias = str
+functionAdress: TypeAlias = function
 
 # screen info
 displayInfo = pygame.display.Info()

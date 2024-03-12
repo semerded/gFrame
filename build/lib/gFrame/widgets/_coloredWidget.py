@@ -1,4 +1,5 @@
 from ..widgets._baseWidget import _BaseWidget
+from ..components.updating import Updating
 from ..components.draw import Draw
 from ..elements.colors import Color
 from ..baseImporter import vars
@@ -27,6 +28,7 @@ class _ColoredWidget(_BaseWidget):
             
     def _changeColorOnEvent(self, event, clickColor: vars.RGBvalue):
         if self.getWidgetStatus:
+            Updating.requestRectUpdate(self.getBorderRect)
             if event():
                 self.widgetColor = clickColor
             else:

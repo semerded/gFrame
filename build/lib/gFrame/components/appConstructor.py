@@ -34,7 +34,6 @@ class AppConstructor:
         self.appEvents: pygame.event
         self.modifiableFunctions = {"quit": None}
 
-        self.updatePending = False
         self.appFrameCounter = 0
         self.pageCounter = 0
         
@@ -103,11 +102,18 @@ class AppConstructor:
                 else:
                     vars.scrollValue = 0
                     
-        if not self.manualUpdating or self.updatePending or self.isFirstFrame() or vars.windowResized:
-            Updating.updateDisplay()
+        if not self.manualUpdating or vars.updatePending or self.isFirstFrame() or vars.windowResized:
+            if len(vars.updateableRectsPending) != 0:
+                Updating.updateRects(vars.updateableRectsPending)
+            else: 
+                Updating.updateDisplay()
             
         self.appFrameCounter += 1
         self.pageCounter += 1
+        
+        vars.updatePending = False
+        vars.updateableRectsPending = []
+        
         
     def isFirstFrame(self):
         return self.pageCounter < 5
@@ -120,10 +126,10 @@ class AppConstructor:
         ...     image.place("50vw", "20vh")
         ...     *other placers*
         """
-        return not self.manualUpdating or self.updatePending or self.isFirstFrame() or vars.windowResized
+        return not self.manualUpdating or vars.updatePending or self.isFirstFrame() or vars.windowResized
     
     def requestUpdate(self):
-        self.updatePending = True
+        vars.updatePending = True
             
     def setModifiableFunction(self, type: modifiableFunctions, function): 
         self.modifiableFunctions[type] = function
@@ -140,6 +146,19 @@ class AppConstructor:
         if self.appFrameCounter % everyAmountOfFrames == 0:
             return True
         return False
+    
+    def caption(self, caption: str):
+        """
+        set the caption of the app (default = 'gFrame (powered by pygame)')
+        """
+        pygame.display.set_caption(caption)
+        
+    def icon(self, icon: vars.path):
+        """
+        set the icon of the app
+        """
+        icon = pygame.image.load(icon)
+        pygame.display.set_icon(icon) 
     
     def switchPage(self):
         self.pageCounter = 0
