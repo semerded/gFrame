@@ -1,4 +1,5 @@
-import time, vars
+import time
+from ..baseImporter import vars
 from ..components.appConstructor import AppConstructor
 from ..widgets.text import Text
 from ..elements.colors import Color
@@ -7,7 +8,7 @@ class Debugger:
     def showFPS(appObject: AppConstructor):
         fps = appObject.clock.get_fps()
         Text.simpleText((5, 5), fps, color= Color.GREEN)
-    
+        
     def loop(appObject: AppConstructor, main: vars.functionAdress, fps: float = 60):
         while True:
             try:
@@ -16,6 +17,8 @@ class Debugger:
                 Debugger.showFPS()
             except Exception as error:
                 print(error)
+
+
         
 class RunTimer:
     def setTimePoint():
