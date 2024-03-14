@@ -28,8 +28,8 @@ class _ColoredWidget(_BaseWidget):
             
     def _changeColorOnEvent(self, event, clickColor: vars.RGBvalue):
         if self.getWidgetStatus:
-            Updating.requestRectUpdate(self.getBorderRect)
             if event():
+                Updating.requestRectUpdate(self.getBorderRect)
                 self.widgetColor = clickColor
             else:
                 self.widgetColor = self.defaultColor 

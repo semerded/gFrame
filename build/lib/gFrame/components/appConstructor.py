@@ -103,7 +103,7 @@ class AppConstructor:
                     vars.scrollValue = 0
                     
         if not self.manualUpdating or vars.updatePending or self.isFirstFrame() or vars.windowResized:
-            if len(vars.updateableRectsPending) != 0:
+            if len(vars.updateableRectsPending) != 0 and not self.isFirstFrame():
                 Updating.updateRects(vars.updateableRectsPending)
             else: 
                 Updating.updateDisplay()

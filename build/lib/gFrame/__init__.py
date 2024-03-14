@@ -17,6 +17,8 @@ from .components.logger import Logger
 from .components.screenUnits import ScreenUnit
 from .components.scroll import Scroll
 from .components.updating import Updating
+from .components.debugger import Debugger, RunTimer
+from .components.runmodes import debugger, logging, production
 
 from .widgets.button import Button
 from .widgets.text import Text
