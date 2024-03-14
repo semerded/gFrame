@@ -13,7 +13,3 @@ class Rect(pygame.Rect):
 
     def unpack(self):
         return self.left, self.top, self.width, self.height
-    
-    @staticmethod
-    def placeHolder():
-        return Rect(0, 0, 0, 0)

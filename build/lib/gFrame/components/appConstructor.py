@@ -24,11 +24,12 @@ class AppConstructor:
     the appConstructor initializes the game display\n
     it main purpose is to do every action within the `eventhandler` function
     """
-    def __init__(self, appWidth: constructorUnit, appHeight: constructorUnit, *flags, manualUpdating: bool = False) -> None:
+    def __init__(self, appWidth: constructorUnit, appHeight: constructorUnit, *flags, manualUpdating: bool = False, fullScreenUpdates: bool = True) -> None:
         vars.aspectRatioObject = _AspectRatio()
         vars.appWidth, vars.appHeight = ScreenUnit.convertMultipleUnits(appWidth, appHeight)
         vars.appFlags = flags
         self.manualUpdating = manualUpdating
+        self.fullScreenUpdates = fullScreenUpdates
         self.clock = pygame.time.Clock()
         
         self.appEvents: pygame.event
@@ -103,7 +104,7 @@ class AppConstructor:
                     vars.scrollValue = 0
                     
         if not self.manualUpdating or vars.updatePending or self.isFirstFrame() or vars.windowResized:
-            if len(vars.updateableRectsPending) != 0 and not self.isFirstFrame():
+            if not self.fullScreenUpdates and not self.isFirstFrame() and len(vars.updateableRectsPending) != 0 :
                 Updating.updateRects(vars.updateableRectsPending)
             else: 
                 Updating.updateDisplay()
