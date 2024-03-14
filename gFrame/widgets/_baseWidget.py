@@ -56,20 +56,23 @@ class _BaseWidget:
     
     def isSuperClicked(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
-            Updating.requestRectUpdate(self.getBorderRect)
-            return Interactions.isMouseClickedInRect(mouseButton, self.widgetRect)
+            if (status := Interactions.isMouseClickedInRect(mouseButton, self.widgetRect)):
+                Updating.requestRectUpdate(self.getBorderRect) 
+            return status
         return False
     
     def isSuperPressing(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
-            Updating.requestRectUpdate(self.getBorderRect)
-            return Interactions.isMousePressingInRect(mouseButton, self.widgetRect)
+            if (status := Interactions.isMousePressingInRect(mouseButton, self.widgetRect)):
+                Updating.requestRectUpdate(self.getBorderRect) 
+            return status
         return False
     
     def isSuperReleased(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
-            Updating.requestRectUpdate(self.getBorderRect)
-            return Interactions.isMouseReleasedInRect(mouseButton, self.widgetRect)
+            if (status := Interactions.isMouseReleasedInRect(mouseButton, self.widgetRect)):
+                Updating.requestRectUpdate(self.getBorderRect) 
+            return status
         return False
     
     def inRect(self, rect: Rect):

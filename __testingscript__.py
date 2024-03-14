@@ -1,7 +1,7 @@
 import gFrame.__init__ as game
 
-GAME = game.AppConstructor("50dw", "50dh")
-game.Display.setAspectRatio(game.aspectRatios.ratio16to9)
+GAME = game.AppConstructor("50dw", "50dh", manualUpdating=True)
+game.Display.setAspectRatio(game.aspectRatios.ratio16to9, "50dw")
 
 # slider = game.Slider((50, 30), 50, 300, game.Color.RED, borderRadius=50)
 button = game.Button(("20vw", "30vh"), game.Color.GREEN, borderRadius=50)
@@ -24,7 +24,8 @@ text = game.Text("hello world!", "comic sans", "10vw", game.Color.BLACK)
 text.setBackground(game.Color.AQUAMARINE)
 text.setBorder(5, game.Color.BITTERSWEET, 5)
 
-while True:
+@game.debugger
+def main():
     GAME.eventHandler()
     GAME.fill(game.Color.WHITE)
     
@@ -43,7 +44,7 @@ while True:
     #     print("held done")
         
     if button.isDoubleClicked():
-        print("double click")
+        bleh = ... * 5
         
     if secondButton.isClicked():
         if button.getWidgetStatus:
@@ -58,3 +59,4 @@ while True:
     
 
 
+# main()

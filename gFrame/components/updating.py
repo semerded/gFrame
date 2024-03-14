@@ -7,7 +7,7 @@ class Updating:
         
         
     def updateRects(*rect: Rect):
-        pygame.display.update(rect)
+        pygame.display.update(*rect)
         
     def requestUpdate():
         vars.updatePending = True
