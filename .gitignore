@@ -1,5 +1,5 @@
 *.pyc
 test.py
 .vscode
-build
-dist
+/build
+/dist

@@ -108,6 +108,8 @@ class AppConstructor:
                 Updating.updateRects(vars.updateableRectsPending)
             else: 
                 Updating.updateDisplay()
+        elif self.fullScreenUpdates and len(vars.updateableRectsPending) != 0:
+            Updating.updateDisplay()
             
         self.appFrameCounter += 1
         self.pageCounter += 1
