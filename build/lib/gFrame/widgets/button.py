@@ -82,7 +82,7 @@ class Button(_ColoredWidget):
                 self.doubleClickTimeDifference = 0
                 return True
             self.doubleClickTimeDifference = time()
-        if Interactions.isMouseClickedNotInRect(mousebutton, self.getRect):
+        if Interactions.isMouseClickedNotInRect(self.getRect, mousebutton):
             self.doubleClickTimeDifference = 0
         return False 
 

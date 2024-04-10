@@ -7,10 +7,6 @@ def getVersion() -> gFrameVersion:
     print(_GFRAME_VERSION)
     return _GFRAME_VERSION
 
-pygame.init()
-pygame.mixer.init()
-pygame.display.set_caption("gFrame (powered by pygame)")
-
 # type declaration
 RGBvalue: TypeAlias = tuple[int, int, int]
 validScreenUnit: TypeAlias = int | float | Literal[

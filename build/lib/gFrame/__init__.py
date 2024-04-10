@@ -1,5 +1,15 @@
 from .baseImporter import pygame
 
+pygame.init()
+try:
+    pygame.mixer.init()
+except:
+    _mixer = False
+else:
+    _mixer = True
+    
+pygame.display.set_caption("gFrame (powered by pygame)")
+
 from .vars import RGBvalue, validScreenUnit, getVersion
 
 from .elements.colors import Color
@@ -10,7 +20,9 @@ from .components.rect import Rect
 from .components.display import Display
 from .components.appConstructor import AppConstructor
 from .components.animate import Animate
-from .components.audio import Audio
+if _mixer:
+    from .components.audio import Audio
+del _mixer
 from .components.draw import Draw
 from .components.interactions import Interactions
 from .components.logger import Logger

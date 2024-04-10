@@ -30,8 +30,9 @@ class Interactions:
     def isMouseOver(rect: Rect) -> bool:
         return rect.collidepoint(pygame.mouse.get_pos())
     
-    def isMouseInArea(topCord: int, bottomCord: int) -> bool:
-        rect = Rect(topCord, bottomCord)
+    def isMouseInArea(topCord: vars.coordinate, bottomCord: vars.coordinate) -> bool:
+        size = (abs(bottomCord[0] - topCord[0]), abs(bottomCord[1] - topCord[1]))
+        rect = Rect(topCord, size)
         return Interactions.isMouseOver(rect)
     
     def isMouseInPolygon(polygon: list | tuple [vars.coordinate]) -> bool:
@@ -41,73 +42,73 @@ class Interactions:
         return Draw.distanceBetweenPoints(center, pygame.mouse.get_pos()) < radius
 
     # click detection
-    def isMouseClicked(mouseButton: mouseButton) -> bool:
+    def isMouseClicked(mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions._posFlank(mouseButton)
     
-    def isMouseClickedInRect(mouseButton: mouseButton, rect: Rect) -> bool:
+    def isMouseClickedInRect(rect: Rect, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions.isMouseOver(rect) and Interactions.isMouseClicked(mouseButton)
     
-    def isMouseClickedInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
+    def isMouseClickedInPolygon(polygon: list | tuple [list | tuple], mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions.isMouseInPolygon(polygon) and Interactions.isMouseClicked(mouseButton)
     
-    def isMouseClickedInCircle(mouseButton: mouseButton, center: vars.coordinate, radius: int) -> bool:
+    def isMouseClickedInCircle(center: vars.coordinate, radius: int, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions.isMouseInCircle(center, radius) and Interactions.isMouseClicked(mouseButton)
     
     #? not variations
-    def isMouseClickedNotInRect(mouseButton: mouseButton, rect: Rect) -> bool:
+    def isMouseClickedNotInRect(rect: Rect, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return not Interactions.isMouseOver(rect) and Interactions.isMouseClicked(mouseButton)
     
-    def isMouseClickedNotInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
+    def isMouseClickedNotInPolygon(polygon: list | tuple [list | tuple], mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return not Interactions.isMouseInPolygon(polygon) and Interactions.isMouseClicked(mouseButton)
     
-    def isMouseClickedNotInCircle(mouseButton: mouseButton, center: vars.coordinate, radius: int) -> bool:
+    def isMouseClickedNotInCircle(center: vars.coordinate, radius: int, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return not Interactions.isMouseInCircle(center, radius) and Interactions.isMouseClicked(mouseButton)
 
     # release detection
-    def isMouseReleased(mouseButton: mouseButton) -> bool:
+    def isMouseReleased(mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions._negFlank(mouseButton)
     
-    def isMouseReleasedInRect(mouseButton: mouseButton, rect: Rect) -> bool:
+    def isMouseReleasedInRect(rect: Rect, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions.isMouseOver(rect) and Interactions.isMouseReleased(mouseButton)
     
-    def isMouseReleasedInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
+    def isMouseReleasedInPolygon(polygon: list | tuple [list | tuple], mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions.isMouseInPolygon(polygon) and Interactions.isMouseReleased(mouseButton)
     
-    def isMouseReleasedInCircle(mouseButton: mouseButton, center: vars.coordinate, radius: int) -> bool: 
+    def isMouseReleasedInCircle(center: vars.coordinate, radius: int, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool: 
         return Interactions.isMouseInCircle(center, radius) and Interactions.isMouseReleased(mouseButton)
     
     #? not variations
-    def isMouseReleasedNotInRect(mouseButton: mouseButton, rect: Rect) -> bool:
+    def isMouseReleasedNotInRect(rect: Rect, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return not Interactions.isMouseOver(rect) and Interactions.isMouseReleased(mouseButton)
     
-    def isMouseReleasedNotInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]) -> bool:
+    def isMouseReleasedNotInPolygon(polygon: list | tuple [list | tuple], mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return not Interactions.isMouseInPolygon(polygon) and Interactions.isMouseReleased(mouseButton)
     
-    def isMouseReleasedNotInCircle(mouseButton: mouseButton, center: vars.coordinate, radius: int) -> bool: 
+    def isMouseReleasedNotInCircle(center: vars.coordinate, radius: int, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool: 
         return not Interactions.isMouseInCircle(center, radius) and Interactions.isMouseReleased(mouseButton)
 
     
     # hold detection
-    def isMousePressing(mouseButton: mouseButton):
+    def isMousePressing(mouseButton: mouseButton = mouseButton.leftMouseButton):
         return Interactions._pressed(mouseButton)
     
-    def isMousePressingInRect(mouseButton: mouseButton, rect: Rect):
+    def isMousePressingInRect(rect: Rect, mouseButton: mouseButton = mouseButton.leftMouseButton):
         return Interactions.isMouseOver(rect) and Interactions.isMousePressing(mouseButton)
     
-    def isMousePressingInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]):
+    def isMousePressingInPolygon(polygon: list | tuple [list | tuple], mouseButton: mouseButton = mouseButton.leftMouseButton):
         return Interactions.isMouseInPolygon(polygon) and Interactions.isMousePressing(mouseButton)
     
-    def isMousePressingInCircle(mouseButton: mouseButton, center: vars.coordinate, radius: int) -> bool:
+    def isMousePressingInCircle(center: vars.coordinate, radius: int, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return Interactions.isMouseInCircle(center, radius) and Interactions.isMousePressing(mouseButton)
     
     #? not variations
-    def isMousePressingNotInRect(mouseButton: mouseButton, rect: Rect):
+    def isMousePressingNotInRect(rect: Rect, mouseButton: mouseButton = mouseButton.leftMouseButton):
         return not Interactions.isMouseOver(rect) and Interactions._pressed(mouseButton)
     
-    def isMousePressingNotInPolygon(mouseButton: mouseButton, polygon: list | tuple [list | tuple]):
+    def isMousePressingNotInPolygon(polygon: list | tuple [list | tuple], mouseButton: mouseButton = mouseButton.leftMouseButton):
         return not Interactions.isMouseInPolygon(polygon) and Interactions.isMousePressing(mouseButton)
     
-    def isMousePressingNotInCircle(mouseButton: mouseButton, center: vars.coordinate, radius: int) -> bool:
+    def isMousePressingNotInCircle(center: vars.coordinate, radius: int, mouseButton: mouseButton = mouseButton.leftMouseButton) -> bool:
         return not Interactions.isMouseInCircle(center, radius) and Interactions.isMousePressing(mouseButton)
         
         

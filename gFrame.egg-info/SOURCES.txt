@@ -30,6 +30,8 @@ gFrame/elements/__init__.py
 gFrame/elements/colors.py
 gFrame/elements/enums.py
 gFrame/elements/fonts.py
+gFrame/std/__init__.py
+gFrame/std/matrix.py
 gFrame/widgets/__init__.py
 gFrame/widgets/_baseImage.py
 gFrame/widgets/_baseWidget.py

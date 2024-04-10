@@ -48,7 +48,7 @@ class _BaseWidget:
         
     
     def _setWidgetAlreadyPressed(self, mouseButton: mouseButton, func):
-        if (result := func(mouseButton, self.widgetRect)):
+        if (result := func(self.widgetRect, mouseButton)):
             vars.widgetAlreadyPressed = True
             Updating.requestRectUpdate(self.getBorderRect)
 
@@ -56,21 +56,21 @@ class _BaseWidget:
     
     def isSuperClicked(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
-            if (status := Interactions.isMouseClickedInRect(mouseButton, self.widgetRect)):
+            if (status := Interactions.isMouseClickedInRect(self.widgetRect, mouseButton)):
                 Updating.requestRectUpdate(self.getBorderRect) 
             return status
         return False
     
     def isSuperPressing(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
-            if (status := Interactions.isMousePressingInRect(mouseButton, self.widgetRect)):
+            if (status := Interactions.isMousePressingInRect(self.widgetRect, mouseButton)):
                 Updating.requestRectUpdate(self.getBorderRect) 
             return status
         return False
     
     def isSuperReleased(self, mouseButton: mouseButton = mouseButton.leftMouseButton):
         if not self.deActivated:
-            if (status := Interactions.isMouseReleasedInRect(mouseButton, self.widgetRect)):
+            if (status := Interactions.isMouseReleasedInRect(self.widgetRect, mouseButton)):
                 Updating.requestRectUpdate(self.getBorderRect) 
             return status
         return False
@@ -120,7 +120,7 @@ class _BaseWidget:
         self._checkIfWidgetIsClicked()
         
     def _checkIfWidgetIsClicked(self):
-        if Interactions.isMouseClickedInRect(mouseButton.leftMouseButton, self.widgetRect):
+        if Interactions.isMouseClickedInRect(self.widgetRect, mouseButton.leftMouseButton):
             self.isClickedInWidget = True
         
     def resize(self, width, height):
