@@ -1,4 +1,4 @@
-from .baseImporter import pygame
+import pygame
 
 pygame.init()
 try:
