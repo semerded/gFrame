@@ -27,6 +27,7 @@ gFrame/core/rect.py
 gFrame/core/rect.pyi
 gFrame/core/runmodes.py
 gFrame/core/screenUnits.py
+gFrame/core/screenUnits.pyi
 gFrame/core/scroll.py
 gFrame/core/shareKey.py
 gFrame/core/updating.py
