@@ -1,5 +1,7 @@
 import pygame
 
+from pygame import FULLSCREEN, NOFRAME
+
 pygame.init()
 try:
     pygame.mixer.init()
@@ -30,7 +32,7 @@ from .core.screenUnits import ScreenUnit
 from .core.scroll import Scroll
 from .core.updating import Updating
 from .core.debugger import Debugger, RunTimer
-from .core.runmodes import debugger, logging, production
+from .core.runmodes import debugging, logging, production
 
 from .widgets.button import Button
 from .widgets.text import Text

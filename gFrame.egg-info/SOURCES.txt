@@ -1,6 +1,7 @@
 README.md
 setup.py
 gFrame/__init__.py
+gFrame/__init__.pyi
 gFrame/baseImporter.py
 gFrame/colors.py
 gFrame/enums.py

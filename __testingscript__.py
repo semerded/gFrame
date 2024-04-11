@@ -24,7 +24,7 @@ text = game.Text("hello world!", "comic sans", "10vw", game.Color.BLACK)
 text.setBackground(game.Color.AQUAMARINE)
 text.setBorder(5, game.Color.BITTERSWEET, 5)
 
-@game.debugger
+@game.debugging
 def main():
     GAME.eventHandler()
     GAME.fill(game.Color.WHITE)

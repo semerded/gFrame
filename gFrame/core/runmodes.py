@@ -1,7 +1,7 @@
 from ..baseImporter import pygame
 import sys
 
-def debugger(func):
+def debugging(func):
     while True:
         try:
             func()
