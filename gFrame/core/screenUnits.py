@@ -38,9 +38,9 @@ class ScreenUnit:
     def getVhFromPx(yPixel: int) -> (int | float):
         return yPixel / (vars.appHeight / 100)
 
-    def getRelativePosition(position: tuple[int]) -> tuple[(int | float)]:
-        vw = ScreenUnit.getVwFromPx(position[0])
-        vh = ScreenUnit.getVhFromPx(position[1])
+    def getRelativePosition(coordinate: tuple[int]) -> tuple[(int | float)]:
+        vw = ScreenUnit.getVwFromPx(coordinate[0])
+        vh = ScreenUnit.getVhFromPx(coordinate[1])
         return vw, vh
     
     def aspectRatioFromInt(xRatio: int, yRatio: int):
