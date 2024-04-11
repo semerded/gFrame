@@ -3,3 +3,4 @@ Name: gFrame
 Version: 1.0.0
 Summary: gFrame is built on the widely used pygame library. It aims for a more user friendly programming process by including easier setup and a lot of widgets
 Author: Sem Van Broekhoven
+Requires-Dist: pygame

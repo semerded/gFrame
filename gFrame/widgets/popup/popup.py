@@ -1,6 +1,6 @@
 from ...baseImporter import pygame, vars
-from ...components.draw import Draw
-from ...components.interactions import Interactions
+from ...core.draw import Draw
+from ...core.interactions import Interactions
 
 class PopUp:
     def __init__(self, width: vars.validScreenUnit, height: vars.validScreenUnit, ) -> None:

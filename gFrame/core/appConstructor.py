@@ -1,8 +1,8 @@
 from ..baseImporter import pygame
-from ..components.screenUnits import ScreenUnit
-from ..components.display import Display
-from ..components.updating import Updating
-from ..components.aspectRatio import _AspectRatio
+from ..core.screenUnits import ScreenUnit
+from ..core.display import Display
+from ..core.updating import Updating
+from ..core.aspectRatio import _AspectRatio
 
 from typing_extensions import TypeAlias, Literal
 from .. import vars

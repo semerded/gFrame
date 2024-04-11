@@ -1,5 +1,5 @@
 from ..baseImporter import vars
-from ..elements.enums import aspectRatios
+from ..enums import aspectRatios
 
 class ScreenUnit:
     def precent(parentSize, percent):

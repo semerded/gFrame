@@ -1,5 +1,5 @@
 from ..baseImporter import pygame, vars
-from ..components.screenUnits import ScreenUnit
+from ..core.screenUnits import ScreenUnit
 
 class _BaseImage:
     def __init__(self, fileName: str, nameHint: str = "") -> None:

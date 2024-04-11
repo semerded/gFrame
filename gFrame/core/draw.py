@@ -1,7 +1,7 @@
 from ..baseImporter import pygame, vars
-from ..components.rect import Rect
-from ..elements.colors import Color
-from ..components.screenUnits import ScreenUnit
+from ..core.rect import Rect
+from ..colors import Color
+from ..core.screenUnits import ScreenUnit
 from math import sqrt
 
 class Draw:

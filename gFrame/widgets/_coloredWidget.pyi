@@ -1,6 +1,6 @@
 from typing import overload
 from ..widgets._baseWidget import _BaseWidget
-from ..elements.colors import Color
+from ..colors import Color
 from ..baseImporter import vars
 
 class _ColoredWidget(_BaseWidget):

@@ -1,11 +1,11 @@
 from ..baseImporter import vars
-from ..components.interactions import Interactions
-from ..components.screenUnits import ScreenUnit
-from ..components.draw import Draw
-from ..components.rect import Rect
-from ..components.updating import Updating
-from ..elements.enums import mouseButton
-from ..elements.colors import Color
+from ..core.interactions import Interactions
+from ..core.screenUnits import ScreenUnit
+from ..core.draw import Draw
+from ..core.rect import Rect
+from ..core.updating import Updating
+from ..enums import mouseButton
+from ..colors import Color
 
 class _BaseWidget:
     deActivated = False

@@ -1,8 +1,8 @@
-from ...elements.enums import mouseButton
-from ...components.rect import Rect
-from ...components.screenUnits import ScreenUnit
-from ...components.interactions import Interactions
-from ...components.draw import Draw
+from ...enums import mouseButton
+from ...core.rect import Rect
+from ...core.screenUnits import ScreenUnit
+from ...core.interactions import Interactions
+from ...core.draw import Draw
 
 class _BasePopup:
     popupRect = Rect(0, 0, 0, 0)

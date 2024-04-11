@@ -1,5 +1,5 @@
-from ..elements.enums import mouseButton
-from ..components.rect import Rect
+from ..enums import mouseButton
+from ..core.rect import Rect
 from ..baseImporter import vars
 
 class Interactions:

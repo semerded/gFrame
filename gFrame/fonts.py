@@ -1,5 +1,5 @@
 import pygame
-from ..baseImporter import vars
+from .baseImporter import vars
 pygame.font.init()
 
 class Font:

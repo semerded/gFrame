@@ -1,8 +1,8 @@
 import time
 from ..baseImporter import vars
-from ..components.appConstructor import AppConstructor
+from ..core.appConstructor import AppConstructor
 from ..widgets.text import Text
-from ..elements.colors import Color
+from ..colors import Color
 
 class Debugger:
     def showFPS(appObject: AppConstructor):

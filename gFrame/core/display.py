@@ -1,6 +1,6 @@
 from ..baseImporter import pygame
-from ..elements.enums import aspectRatios
-from ..components.screenUnits import ScreenUnit
+from ..enums import aspectRatios
+from ..core.screenUnits import ScreenUnit
 from ..baseImporter import vars
 try:
     import PIL.Image

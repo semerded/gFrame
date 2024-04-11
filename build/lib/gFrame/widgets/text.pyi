@@ -1,8 +1,8 @@
 from ..baseImporter import pygame, vars
-from ..elements.enums import overFlow, hoverSpeed, xTextPositioning, yTextPositioning
-from ..elements.fonts import Font
-from ..elements.colors import Color
-from ..components.rect import Rect
+from ..enums import overFlow, hoverSpeed, xTextPositioning, yTextPositioning
+from ..fonts import Font
+from ..colors import Color
+from ..core.rect import Rect
 from typing import overload
 
 class Text:

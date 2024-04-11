@@ -1,11 +1,11 @@
 from ..baseImporter import pygame, vars
-from ..elements.enums import overFlow, xTextPositioning, yTextPositioning, hoverSpeed
-from ..elements.colors import Color
-from ..elements.fonts import Font
-from ..components.draw import Draw
-from ..components.display import Display
-from ..components.screenUnits import ScreenUnit
-from ..components.rect import Rect
+from ..enums import overFlow, xTextPositioning, yTextPositioning, hoverSpeed
+from ..colors import Color
+from ..fonts import Font
+from ..core.draw import Draw
+from ..core.display import Display
+from ..core.screenUnits import ScreenUnit
+from ..core.rect import Rect
 
 
 class Text:

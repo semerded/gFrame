@@ -1,7 +1,7 @@
 from ..widgets._baseWidget import _BaseWidget
-from ..components.updating import Updating
-from ..components.draw import Draw
-from ..elements.colors import Color
+from ..core.updating import Updating
+from ..core.draw import Draw
+from ..colors import Color
 from ..baseImporter import vars
 
 class _ColoredWidget(_BaseWidget):

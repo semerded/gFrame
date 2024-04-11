@@ -1,5 +1,5 @@
 from ..baseImporter import pygame
-from ..components.rect import Rect
+from ..core.rect import Rect
 from ..widgets._baseImage import _BaseImage
 from ..widgets._baseWidget import _BaseWidget
 

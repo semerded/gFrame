@@ -1,6 +1,6 @@
-from ..elements.enums import axis, aspectRatios
-from ..components.screenUnits import ScreenUnit
-from ..components.display import Display
+from ..enums import axis, aspectRatios
+from ..core.screenUnits import ScreenUnit
+from ..core.display import Display
 from .. import vars
 
 class _AspectRatio:

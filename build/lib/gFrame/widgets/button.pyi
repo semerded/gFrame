@@ -1,7 +1,7 @@
 from ..baseImporter import pygame, vars
-from ..components.rect import Rect
-from ..elements.colors import Color
-from ..elements.enums import mouseButton, overFlow
+from ..core.rect import Rect
+from ..colors import Color
+from ..enums import mouseButton, overFlow
 from ..widgets._coloredWidget import _ColoredWidget
 from typing import overload
 

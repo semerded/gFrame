@@ -1,12 +1,12 @@
 from ..baseImporter import pygame, vars
-from ..components.draw import Draw
-from ..components.interactions import Interactions
-from ..components.screenUnits import ScreenUnit
-from ..components.rect import Rect
+from ..core.draw import Draw
+from ..core.interactions import Interactions
+from ..core.screenUnits import ScreenUnit
+from ..core.rect import Rect
 from ..widgets._baseImage import _BaseImage
-from ..elements.fonts import Font
-from ..elements.colors import Color
-from ..elements.enums import mouseButton, overFlow
+from ..fonts import Font
+from ..colors import Color
+from ..enums import mouseButton, overFlow
 from ..widgets._coloredWidget import _ColoredWidget
 from ..widgets.text import Text
 from time import time

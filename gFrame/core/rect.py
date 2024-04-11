@@ -1,5 +1,5 @@
 from ..baseImporter import pygame
-from ..components.screenUnits import ScreenUnit
+from ..core.screenUnits import ScreenUnit
 
 class Rect(pygame.Rect):
     def __init__(self, *args):

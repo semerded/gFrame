@@ -1,7 +1,7 @@
 from ..baseImporter import pygame
-from ..elements.enums import mouseButton
-from ..components.draw import Draw
-from ..components.rect import Rect
+from ..enums import mouseButton
+from ..core.draw import Draw
+from ..core.rect import Rect
 
 from ..baseImporter import vars
 

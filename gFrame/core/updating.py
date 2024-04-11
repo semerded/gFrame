@@ -1,5 +1,5 @@
 from ..baseImporter import pygame, vars
-from ..components.rect import Rect
+from ..core.rect import Rect
 
 class Updating:
     def updateDisplay():

@@ -1,4 +1,4 @@
-from ..elements.enums import scrollSpeed
+from ..enums import scrollSpeed
 from ..baseImporter import vars
 
 class Scroll():

@@ -1,9 +1,9 @@
 from ..baseImporter import pygame, vars
-from ..components.interactions import Interactions
-from ..components.draw import Draw
-from ..elements.colors import Color
-from ..elements.enums import mouseButton
-from ..components.rect import Rect
+from ..core.interactions import Interactions
+from ..core.draw import Draw
+from ..colors import Color
+from ..enums import mouseButton
+from ..core.rect import Rect
 
 minSliderValue = None
 
