@@ -1,6 +1,9 @@
 from typing_extensions import TypeAlias, Literal
 from .baseImporter import pygame
 
+print("\n\033[97mgFrame! (powered by pygame)")
+print("read documentations here: \n")
+
 _GFRAME_VERSION = '1.0.0'
 gFrameVersion: TypeAlias = str
 def getVersion() -> gFrameVersion:
