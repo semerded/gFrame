@@ -116,13 +116,13 @@ class Text:
     def placeCenterScreen(self):
         pass
     
-    def placeInRect(self, *args):
-        if len(args) == 4:
-            self.setText(args[3])
+    def placeInRect(self, rect, xTextPosition = xTextPositioning.center, yTextPosition = yTextPositioning.center, newText = None):
+        if newText != None:
+            self.setText(newText)
         # top = self._textHover(top) # TODO add hover
-        _rect: Rect = args[0]
+        _rect: Rect = rect
         self.textRect = Rect(_rect.x, _rect.y, _rect.width + 6, _rect.height + 6)
-        x, y = self._calculateTextPositioning(self.textRect, args[1], args[2])
+        x, y = self._calculateTextPositioning(self.textRect, xTextPosition, yTextPosition)
         self._drawBase()
         vars.mainDisplay.blit(self.textSurface, (x + 3, y + 3))
         
