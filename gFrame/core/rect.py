@@ -1,4 +1,4 @@
-from ..baseImporter import pygame
+from ..baseImporter import pygame, vars
 from ..core.screenUnits import ScreenUnit
 
 class Rect(pygame.Rect):
@@ -13,6 +13,30 @@ class Rect(pygame.Rect):
 
     def unpack(self):
         return self.left, self.top, self.width, self.height
+    
+    def expandWidth(self, expansion: vars.validScreenUnit):
+        expansion = ScreenUnit.checkIfValidScreenUnit(expansion)
+        self.width += expansion
+        self.left -= int(expansion / 2)
+        
+    def shrinkWidth(self, shrinkage: vars.validScreenUnit):
+        shrinkage = ScreenUnit.checkIfValidScreenUnit(shrinkage)
+        self.expandWidth(-shrinkage)
+        
+    def expandHeight(self, expansions: vars.validScreenUnit):
+        expansion = ScreenUnit.checkIfValidScreenUnit(expansion)
+        self.height += expansions
+        self.top -= int(expansion / 2)
+        
+    def shrinkHeight(self, shrinkage: vars.validScreenUnit):
+        shrinkage = ScreenUnit.checkIfValidScreenUnit(shrinkage)
+        self.expandHeight(-shrinkage)
+        
+    def rw(self, screenUnit: float):
+        return self.width / 100 * screenUnit
+    
+    def rh(self, screenUnit: float):
+        return self.height / 100 * screenUnit
     
     @staticmethod
     def placeHolder():
