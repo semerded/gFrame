@@ -38,6 +38,12 @@ class Rect(pygame.Rect):
     def rh(self, screenUnit: float):
         return self.height / 100 * screenUnit
     
+    def pw(self, screenUnit: float):
+        return (self.width / 100 * screenUnit) + self.x
+    
+    def ph(self, screenUnit: float):
+        return (self.height / 100 * screenUnit) + self.y
+    
     @staticmethod
     def placeHolder():
         return pygame.Rect(0, 0, 0, 0)
