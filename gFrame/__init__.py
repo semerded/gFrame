@@ -36,7 +36,7 @@ from .core.runmodes import debugging, logging, production
 
 from .widgets.button import Button
 from .widgets.text import Text
-# from widgets.slider import Slider
+from .widgets.newslider import Slider
 from .widgets.image import Image
 from .widgets.roundButton import RoundButton
 # from widgets.textBox import Textbox

@@ -24,6 +24,8 @@ text = game.Text("hello world!", "comic sans", "10vw", game.Color.BLACK)
 text.setBackground(game.Color.AQUAMARINE)
 text.setBorder(5, game.Color.BITTERSWEET, 5)
 
+slider = game.Slider((200, 50), 0, 100, game.Color.BITTERSWEET)
+
 @game.debugging
 def main():
     GAME.eventHandler()
@@ -52,6 +54,8 @@ def main():
         else:
             button.enable()
     image.place(50, 50)
+    
+    slider.place(500, 10)
     
     # roundo.place(10, 10)
     

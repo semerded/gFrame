@@ -23,7 +23,7 @@ from .core.runmodes import debugging as debugging, logging as logging, productio
 
 from .widgets.button import Button as Button
 from .widgets.text import Text as Text
-# from widgets.slider import Slider as Slider
+from .widgets.newslider import Slider as Slider
 from .widgets.image import Image as Image
 from .widgets.roundButton import RoundButton as RoundButton
 # from widgets.textBox import Textbox as Textbox

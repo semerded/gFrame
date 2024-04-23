@@ -14,7 +14,7 @@ class Slider:
         self.sliderSize = size
         self.sliderColor = color
         self.sliderBorderRadius = borderRadius
-        self.sliderRect = Rect(0, 0, 0, 0)
+        self.sliderRect = Rect.placeHolder()
         self.sliderPosition = sliderMin if minSliderValue == None else startValue
         self.borderWidth = 0
         self.clickedInRect = False
