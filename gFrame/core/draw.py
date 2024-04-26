@@ -2,7 +2,7 @@ from ..baseImporter import pygame, vars
 from ..core.rect import Rect
 from ..colors import Color
 from ..core.screenUnits import ScreenUnit
-from math import sqrt
+from math import dist
 
 class Draw:
     @staticmethod
@@ -85,4 +85,4 @@ class Draw:
 
     @staticmethod
     def distanceBetweenPoints(point1: tuple[int], point2: tuple[int]):
-        return sqrt((point1[1] - point1[0]) ** 2 + (point2[1] - point2[0]) ** 2)
+        return dist(point1, point2)
