@@ -11,7 +11,7 @@ from .core.rect import Rect as Rect
 from .core.display import Display as Display
 from .core.appConstructor import AppConstructor as AppConstructor
 from .core.animate import Animate as Animate
-from .core.audio import Audio as Audio
+from .._rebuild.core.audio import Audio as Audio
 from .core.draw import Draw as Draw
 from .core.interactions import Interactions as Interactions
 from .core.logger import Logger as Logger
@@ -23,7 +23,7 @@ from .core.runmodes import debugging as debugging, logging as logging, productio
 
 from .widgets.button import Button as Button
 from .widgets.text import Text as Text
-from .widgets.newslider import Slider as Slider
+from .widgets.slider import Slider as Slider
 from .widgets.image import Image as Image
 from .widgets.roundButton import RoundButton as RoundButton
 # from widgets.textBox import Textbox as Textbox

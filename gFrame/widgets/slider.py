@@ -1,72 +1,75 @@
 from ..baseImporter import pygame, vars
-from ..core.interactions import Interactions
+from ._coloredWidget import _ColoredWidget
+from ..core.screenUnits import ScreenUnit
 from ..core.draw import Draw
 from ..colors import Color
-from ..enums import mouseButton
-from ..core.rect import Rect
+from ..core.updating import Updating
+from ..core.interactions import Interactions
 
-minSliderValue = None
+rounded = -2
 
-class Slider:
-    def __init__(self, size: list[int, int], sliderMin: int | float, sliderMax: int | float, color: vars.RGBvalue, startValue: int | float = minSliderValue, borderRadius: int = -1) -> None:
+class Slider(_ColoredWidget):
+    _slidingActive = False
+    _drawKnob = False
+    knobRadius = -2
+    knobColor = Color.BLACK
+    
+    def __init__(self, size: tuple[vars.validScreenUnit], sliderMin: int | float, sliderMax: int | float, sliderColor: vars.RGBvalue, backgroundColor: vars.RGBvalue, startValue: int | float = None, borderRadius: vars.validScreenUnit = rounded) -> None:
+        if borderRadius == -2:
+            borderRadius = size[1] / 2
+        self.sliderRadius = borderRadius
+        super().__init__(size, backgroundColor, borderRadius)
         self.sliderMin = sliderMin
         self.sliderMax = sliderMax
-        self.sliderSize = size
-        self.sliderColor = color
-        self.sliderBorderRadius = borderRadius
-        self.sliderRect = Rect.placeHolder()
-        self.sliderPosition = sliderMin if minSliderValue == None else startValue
-        self.borderWidth = 0
-        self.clickedInRect = False
+        self.sliderColor = sliderColor
         
-    def border(self, borderWidth: int, borderColor: vars.RGBvalue):
-        self.borderWidth = borderWidth
-        self.borderColor = borderColor
-        
-    def setPosition(self, sliderPostition):
-        if sliderPostition <= self.sliderMax and sliderPostition >= self.sliderMin:
-            self.sliderPosition = sliderPostition
+        if startValue != None and startValue >= sliderMin and startValue <= sliderMax:
+            self.startValue = startValue
+        else:
+            self.startValue = sliderMin
+        self.sliderValue = self.startValue
             
-    def onMouseClick(self):
-        Interactions.onMouseClickInRect(self.sliderRect, mouseButton.leftMouseButton)
+        self.sliderPosition = self.startValue
     
-    def place(self, left, top):
-        self.sliderRect = Rect(left, top, self.sliderSize[0], self.sliderSize[1])
-        self.fullRect = Rect(left - self.borderWidth / 2, top - self.borderWidth / 2, self.sliderSize[0] + self.borderWidth, self.sliderSize[1] + self.borderWidth)
-        
-        self._getSliderPosition(left)
-        self._placeSliderShell(left, top)
-        self._placeSlider(left, top)
-        self._placeBorder()
-        return self._calculateSliderPosition()
+    def setKnob(self, radius: vars.validScreenUnit, color: vars.RGBvalue):
+        self._drawKnob = True
+        self.knobRadius = radius
+        self.knobColor = color       
+            
+    def _placeSlider(self, left, top):
+        Draw.rectangle(left, top, self.sliderPosition, self.widgetSize[1], self.sliderColor, self.sliderRadius)
     
-    def _getSliderPosition(self, left):
-        if Interactions.onMouseClickInRect(self.sliderRect, mouseButton.leftMouseButton):
-            self.clickedInRect = True
-        
-        if Interactions.isReleased(mouseButton.leftMouseButton):
-            self.clickedInRect = False
-        if self.clickedInRect:
+    def _getSliderPosition(self, left, top):
+        if super().isSuperClicked() or (self._drawKnob and Interactions.isMouseClickedInCircle((left + self.sliderPosition , top + self.widgetSize[1] / 2), self.knobRadius)):
+            self._slidingActive = True
+        if Interactions.isMouseReleased():
+            self._slidingActive = False
+            
+        if self._slidingActive:
             mouseXpos = pygame.mouse.get_pos()[0]
             if mouseXpos - left < 0:
                 self.sliderPosition = 0
-            elif mouseXpos - left > self.sliderSize[0]:
-                self.sliderPosition = self.sliderSize[0]
+            elif mouseXpos - left > self.widgetSize[0]:
+                self.sliderPosition = self.widgetSize[0]
             else:
                 self.sliderPosition = mouseXpos - left
-
-    def _placeSliderShell(self, left, top):
-        Draw.rectangle(left, top, self.sliderSize[0], self.sliderSize[1], self.sliderColor, Draw.calculateInnerBorderRadius(self.sliderBorderRadius, self.borderWidth))
-        
-    def _placeSlider(self, left, top):
-        Draw.rectangle(left, top, self.sliderPosition, self.sliderSize[1], Color.GREEN, Draw.calculateInnerBorderRadius(self.sliderBorderRadius, self.borderWidth))
-        
-    def _calculateSliderPosition(self):
+            Updating.requestRectUpdate(self.borderRect)
         difference = self.sliderMax - self.sliderMin
-        return self.sliderPosition / (self.sliderSize[0] / difference) + self.sliderMin
- 
+        self.sliderValue = self.sliderPosition / (self.widgetSize[0] / difference) + self.sliderMin
+        return self.sliderValue
         
-    def _placeBorder(self):
-        if self.borderWidth > 0:
-            Draw.border(self.borderWidth, self.sliderRect, self.borderColor, self.sliderBorderRadius)
+    def place(self, left, top):
+        left, top = ScreenUnit.convertMultipleUnits(left, top)
+        
+        self._getSliderPosition(left, top)
+        self._colordWidgetPlace(left, top, 255, True)
+        self._placeSlider(left, top)
+        if self._drawKnob:
+            Draw.circle((left + self.sliderPosition , top + self.widgetSize[1] / 2), self.knobRadius, self.knobColor)
+        
+    def getValue(self):
+        return self.sliderValue
+        
+        
+        
         

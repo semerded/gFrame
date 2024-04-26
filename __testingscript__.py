@@ -25,6 +25,7 @@ text.setBackground(game.Color.AQUAMARINE)
 text.setBorder(5, game.Color.BITTERSWEET, 5)
 
 slider = game.Slider((200, 50), 0, 100, game.Color.BITTERSWEET)
+slider.setKnob(25, game.Color.BLUE)
 
 @game.debugging
 def main():
@@ -56,6 +57,7 @@ def main():
     image.place(50, 50)
     
     slider.place(500, 10)
+    print(slider.getValue())
     
     # roundo.place(10, 10)
     
