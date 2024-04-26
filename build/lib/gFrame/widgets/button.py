@@ -9,7 +9,7 @@ from ..colors import Color
 from ..enums import mouseButton, overFlow
 from ..widgets._coloredWidget import _ColoredWidget
 from ..widgets.text import Text
-from time import time
+from time import time # type: ignore
 
 class Button(_ColoredWidget):
     pressingTime = 0
@@ -82,14 +82,14 @@ class Button(_ColoredWidget):
                 self.doubleClickTimeDifference = 0
                 return True
             self.doubleClickTimeDifference = time()
-        if Interactions.isMouseClickedNotInRect(self.getRect, mousebutton):
+        if Interactions.isMouseClickedOutsideRect(self.getRect, mousebutton):
             self.doubleClickTimeDifference = 0
         return False 
 
     def place(self, left, top, opacity: int = 255):
         left, top = ScreenUnit.convertMultipleUnits(left, top)
             
-        self._colordWidgetPlace(left, top, opacity, True)
+        self._colordWidgetPlace(left, top, opacity, False)
         self._placeText()
         
         if self.buttonIcon != None:
