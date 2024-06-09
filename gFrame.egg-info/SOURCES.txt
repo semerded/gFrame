@@ -3,7 +3,6 @@ setup.py
 _rebuild/colors.py
 _rebuild/fonts.py
 _rebuild/typedef.py
-_rebuild/vars.py
 gFrame/__init__.py
 gFrame/__init__.pyi
 gFrame/baseImporter.py

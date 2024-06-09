@@ -24,7 +24,7 @@ text = game.Text("hello world!", "comic sans", "10vw", game.Color.BLACK)
 text.setBackground(game.Color.AQUAMARINE)
 text.setBorder(5, game.Color.BITTERSWEET, 5)
 
-slider = game.Slider((200, 50), 0, 100, game.Color.BITTERSWEET)
+slider = game.Slider((200, 50), 0, 100, game.Color.BITTERSWEET, game.Color.AQUAMARINE)
 slider.setKnob(25, game.Color.BLUE)
 
 @game.debugging
@@ -54,10 +54,10 @@ def main():
             button.disable()
         else:
             button.enable()
-    image.place(50, 50)
+    image.place("35vw", "35vh")
     
     slider.place(500, 10)
-    print(slider.getValue())
+    # print(slider.getValue())
     
     # roundo.place(10, 10)
     

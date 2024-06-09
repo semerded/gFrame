@@ -11,4 +11,13 @@ add different popup premakes
 add literal text 
 
 debugging supported with node placing and debug info
-- met programma dat als interface werkt
+- met programma dat als interface werkty
+
+
+padded borders
+
+gFrame.Text.H1 ...
+
+
+hoogte toevoegen van andere widget (shit onder elkaar plaatsen)
+-> placeUnder() / placeLeft() ...

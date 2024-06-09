@@ -22,7 +22,7 @@ class _BasePopup:
         Draw.rectangleFromRect(self.popupRect, self.backgroundColor, self.cornerRadius)
         Draw.borderFromRect(self.popupRect, self.borderWidth, self.borderColor, Draw.calculateOuterBorderRadius(self.cornerRadius, self.borderWidth))
         
-        if self.discardWhenClickedOutsidePopup and Interactions.isMouseClickedNotInRect(mouseButton.leftMouseButton, self.popupRect):
+        if self.discardWhenClickedOutsidePopup and Interactions.isMouseClickedOutsideRect(mouseButton.leftMouseButton, self.popupRect):
             return "discard"
     
     
