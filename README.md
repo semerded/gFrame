@@ -3,9 +3,7 @@
 gFrame is built on the widely used pygame library. 
 It aims for a more user friendly programming process.
 
-All pygames setup is done with 1 line of code
-
-It also comes with a lot of premade widgets:
+It also comes with a lot of pre-made widgets:
 - button
 - text
 - slider
@@ -14,3 +12,5 @@ It also comes with a lot of premade widgets:
 - textBox
 - roundButton
 - ... more in progress
+
+(currently rebuilding gFrame -> updates when rebuild is up to date with old version)
